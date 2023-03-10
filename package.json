@@ -4,5 +4,6 @@
   "main": "index.js",
   "repository": "https://github.com/jaxernst/digital-journey-hub.git",
   "author": "jaxernst <51183683+jaxernst@users.noreply.github.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }
