@@ -14,6 +14,21 @@
 
   let text;
 
+  let obj = {
+    pos: {
+      x: startX,
+      y: startY,
+    },
+    vel: {
+      x: 1,
+      y: 1,
+    },
+    accel: {
+      x: 0,
+      y: 0,
+    },
+  };
+
   let x = startX;
   let y = startY;
   const velocity = [0, 0];
@@ -63,12 +78,6 @@
     context.arc(x, y, size, 0, Math.PI * 2);
     context.stroke();
 
-    if (vec2.squaredLength(velocity) > 0) {
-      const normal = vec2.normalize([], velocity);
-      context.lineWidth = thickness;
-      drawNormal(context, position, normal, size);
-    }
-
     // We use this to make sure the text is in sync with the character
     // Because regular prop reactivity happens a frame too late
     text.$set({
@@ -78,16 +87,7 @@
     });
   });
 
-  function drawNormal(context, position, normal, length) {
-    const point = vec2.scaleAndAdd([], position, normal, length);
-    context.beginPath();
-    context.moveTo(position[0], position[1]);
-    context.lineTo(point[0], point[1]);
-    context.stroke();
-  }
-
   function handleMouseMove({ clientX, clientY }) {
-    console.log("mouse moveing");
     mouse = [clientX, clientY];
   }
 

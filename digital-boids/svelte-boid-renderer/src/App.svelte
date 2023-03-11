@@ -1,5 +1,5 @@
-<script>
-  import { width, height, renderable } from "./game.js";
+<script lang="ts">
+  import { width, height } from "./game.js";
 
   import Canvas from "./Canvas.svelte";
   import Background from "./Background.svelte";
@@ -7,6 +7,8 @@
   import Character from "./Character.svelte";
   import Text from "./Text.svelte";
   import FPS from "./FPS.svelte";
+  import BoidSimulation from "./BoidSimulation.svelte";
+  import { addBoid } from "./boidSimControls.js";
 
   const menuItemMaxWidth = 600; // px
 
@@ -14,8 +16,6 @@
   $: menuItemPxWidths = menuItemWidths.map(
     (v) => (v * menuItemMaxWidth).toString() + "px"
   );
-
-  $: console.log(menuItemWidths);
 
   let dir = 1;
   setInterval(() => {
@@ -35,7 +35,10 @@
     <Background color="hsl(0, 0%, 10%)">
       <DotGrid divisions={30} color="hsla(0, 0%, 100%, 0.5)" />
     </Background>
-    <Character size={10} moveSpeed=".7" maxVelocity="10" />
+
+    <BoidSimulation />
+
+    <Character size={10} moveSpeed={0.7} maxVelocity={10} />
     <Text
       text="Click and drag around the page to move the character."
       fontSize={12}
@@ -48,15 +51,20 @@
   </Canvas>
 
   <div class="overlay">
-    <h1 class="left">Jackson Ernst, Digital Journey</h1>
-    <div
-      class="menu"
-      style={menuItemPxWidths.map((w, i) => `--w${i + 1}: ${w}`).join(";")}
-    >
-      <div class="menu-item">Intro</div>
-      <div class="menu-item">Projects</div>
-      <div class="menu-item">Specialtist</div>
-      <div class="menu-item">Contact</div>
+    <div class="content-container">
+      <h1 class="left">Jackson Ernst, Digital Journey</h1>
+      <div
+        class="menu"
+        style={menuItemPxWidths.map((w, i) => `--w${i + 1}: ${w}`).join(";")}
+      >
+        <div class="menu-item">Intro</div>
+        <div class="menu-item">Projects</div>
+        <div class="menu-item">Specialtist</div>
+        <div class="menu-item">Contact</div>
+      </div>
+      <div class="right-bar">
+        <button on:click={() => $addBoid && $addBoid()}>Spawn</button>
+      </div>
     </div>
   </div>
 </main>
@@ -85,16 +93,20 @@
     width: 100%;
   }
 
+  .content-container {
+    display: grid;
+    grid-template-columns: 1fr 20vw;
+  }
+
   .menu {
+    grid-column: 1;
     display: flex;
     flex-direction: column;
     text-align: left;
-    height: 220px;
     gap: 0.5em;
   }
 
   .menu-item {
-    flex-grow: 1;
     background-color: rgba(90, 90, 90, 0.467);
     display: flex;
     align-items: center;
@@ -115,5 +127,11 @@
 
   .menu-item:nth-child(4) {
     width: var(--w4);
+  }
+
+  .right-bar {
+    grid-column: 2;
+    grid-row: 1/-1;
+    padding-top: 1.5em;
   }
 </style>
