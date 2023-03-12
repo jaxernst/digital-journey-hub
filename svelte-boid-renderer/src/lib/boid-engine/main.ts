@@ -1,3 +1,4 @@
+import { canvasArrow, drawPoint } from "./canvas-drawers";
 import {
   add,
   distance,
@@ -5,12 +6,12 @@ import {
   mul,
   norm,
   subtract,
-  averageVectors,
+  magnitude,
+  div,
 } from "./vectorMath";
 
 type Vec2D = [number, number];
-
-type BoidVec = { pos: Vec2D; vel: Vec2D; accel: Vec2D; force: Vec2D };
+type BoidVec = { pos: Vec2D; vel: Vec2D; accel: Vec2D };
 export type Boid = {
   vec: BoidVec;
   mass: number;
@@ -23,14 +24,13 @@ const boidVec: BoidVec = {
   pos: [0, 0],
   vel: [0, 0],
   accel: [0, 0],
-  force: [0, 0],
 };
 
 const defaultAttrs = {
-  mass: 20,
-  maxV: 5,
-  sightRadius: 400,
-  sightPeripheralDeg: 70,
+  mass: 5,
+  maxV: 10,
+  sightRadius: 100,
+  sightPeripheralDeg: 180,
 };
 
 const defaultBoid = {
@@ -38,7 +38,7 @@ const defaultBoid = {
   ...defaultAttrs,
 };
 
-function alignmentForce(boid: Boid, others: Boid[]) {
+function align(boid: Boid, others: Boid[]) {
   let vSum = [0, 0];
   for (let other of others) {
     vSum[0] += other.vec.vel[0];
@@ -46,18 +46,64 @@ function alignmentForce(boid: Boid, others: Boid[]) {
   }
 
   const vAvg = [vSum[0] / others.length, vSum[1] / others.length] as Vec2D;
-  return mul(subtract(vAvg, boid.vec.vel), 1000);
+  return subtract(vAvg, boid.vec.vel);
 }
 
-function gravitateForce(boid: Boid, others: Boid[]) {
-  let pSum = [0, 0];
+function gravitate(boid: Boid, others: Boid[], ctx) {
+  const pSum = [0, 0];
   for (let other of others) {
     pSum[0] += other.vec.pos[0];
     pSum[1] += other.vec.pos[1];
   }
-
   const pAvg = [pSum[0] / others.length, pSum[1] / others.length] as Vec2D;
-  return mul(subtract(pAvg, boid.vec.pos), 0.001);
+
+  // Draw cg
+  drawPoint(...pAvg, ctx);
+
+  // Draw force vector
+  const f = mul(norm(subtract(pAvg, boid.vec.pos)), 25);
+
+  return subtract(pAvg, boid.vec.pos);
+}
+
+function separate(
+  boid: Boid,
+  others: Boid[],
+  refDist: number,
+  ctx: CanvasRenderingContext2D
+) {
+  const pSum = [0, 0];
+  for (let other of others) {
+    pSum[0] += other.vec.pos[0];
+    pSum[1] += other.vec.pos[1];
+  }
+  const pAvg = [pSum[0] / others.length, pSum[1] / others.length] as Vec2D;
+  const dist = distance(boid.vec.pos, pAvg);
+  const vAway = norm(subtract(boid.vec.pos, pAvg));
+  /*const awayPlot = mul(norm(subtract(boid.vec.pos, pAvg)), 20);
+  canvasArrow(
+    ctx,
+    boid.vec.pos[0],
+    boid.vec.pos[1],
+    boid.vec.pos[0] + awayPlot[0],
+    boid.vec.pos[1] + awayPlot[1],
+    4,
+    "blue"
+  ); */
+
+  return mul(vAway, refDist / (dist + 0.1));
+}
+
+function detract(
+  boid: Boid,
+  point: [number, number],
+  strength,
+  minDistance: number
+) {
+  if (!(distance(boid.vec.pos, point) <= minDistance)) return;
+
+  const diff = subtract(boid.vec.pos, point);
+  return mul(diff, strength / Math.sqrt(magnitude(diff)));
 }
 
 function findBoidsInSight(boid: Boid, others: Boid[]) {
@@ -77,7 +123,24 @@ function findBoidsInSight(boid: Boid, others: Boid[]) {
   return output;
 }
 
-function update(boids: Boid[], board: { h: number; w: number }) {
+function limitSpeed(boid: Boid) {
+  const minSpeed = 0.5;
+  const speed = magnitude(boid.vec.vel);
+  if (speed > boid.maxV) {
+    return mul(div(boid.vec.vel, speed), boid.maxV);
+  }
+  if (speed < minSpeed) {
+    return mul(div(boid.vec.vel, speed), minSpeed);
+  }
+  return boid.vec.vel;
+}
+
+function update(
+  boids: Boid[],
+  board: { h: number; w: number },
+  cursor: Vec2D | undefined,
+  ctx
+) {
   let i = 0;
   for (let boid of boids) {
     let vec = boid.vec;
@@ -85,22 +148,28 @@ function update(boids: Boid[], board: { h: number; w: number }) {
     others.splice(i, 1); // Remove current boid index
     others = findBoidsInSight(boid, others);
 
+    let force = [0, 0] as Vec2D;
     if (others.length > 0) {
-      boid.vec.force = alignmentForce(boid, others);
-      // boid.vec.force = add(boid.vec.force, gravitateForce(boid, others));
+      force = add(force, mul(gravitate(boid, others, ctx), 1));
+      force = add(force, mul(align(boid, others), 1));
+      force = add(force, mul(separate(boid, others, board.w, ctx), 1));
     }
 
-    vec.pos[0] += vec.vel[0];
-    vec.pos[1] += vec.vel[1];
+    force = norm(force);
+
+    vec.accel[0] = force[0] / (boid.mass + 0.01);
+    vec.accel[1] = force[1] / (boid.mass + 0.01);
 
     vec.vel[0] += vec.accel[0];
     vec.vel[1] += vec.accel[1];
 
-    vec.accel[0] = vec.force[0] / (boid.mass + 1);
-    vec.accel[1] = vec.force[1] / (boid.mass + 1);
+    vec.vel[0] *= 0.98;
+    vec.vel[1] *= 0.98;
 
-    vec.vel[0] = Math.max(-boid.maxV, Math.min(boid.maxV, vec.vel[0]));
-    vec.vel[1] = Math.max(-boid.maxV, Math.min(boid.maxV, vec.vel[1]));
+    vec.vel = limitSpeed(boid);
+
+    vec.pos[0] += vec.vel[0];
+    vec.pos[1] += vec.vel[1];
 
     // Enforce boundaries
     if (vec.pos[0] > board.w) vec.pos[0] = 0;
@@ -118,10 +187,12 @@ function update(boids: Boid[], board: { h: number; w: number }) {
 export function createBoidSimulation({
   numBoids,
   startPos,
+  startVel,
   boardSize,
 }: {
   numBoids: number;
-  startPos: { x: number; y: number };
+  startPos: [() => number, () => number];
+  startVel: [() => number, () => number];
   boardSize: {
     h: number;
     w: number;
@@ -129,21 +200,24 @@ export function createBoidSimulation({
 }) {
   let boids = [...Array(numBoids)].map(() => ({
     ...defaultBoid,
-    vec: { ...boidVec, pos: [startPos.x, startPos.y] },
+    vec: {
+      ...boidVec,
+      pos: [startPos[0](), startPos[1]()],
+      vel: [startVel[0](), startVel[1]()],
+    },
   })) as Boid[];
 
   let addBoidQueue: (() => Boid)[] = [];
   let board = boardSize;
 
   return {
-    boids,
-    update: () => {
-      boids = update(boids, board);
-
+    update: (cursor: Vec2D, ctx, board: { w: number; h: number }) => {
       for (let addBoid of addBoidQueue) {
         boids = [...boids, addBoid()];
       }
+
       addBoidQueue = [];
+      boids = update(boids, board, cursor, ctx);
       return boids;
     },
     onResize: (newBoard: { h: number; w: number }) => {

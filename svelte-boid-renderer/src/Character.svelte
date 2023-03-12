@@ -2,6 +2,7 @@
   import { renderable, width, height } from "./game.js";
   import Text from "./Text.svelte";
   import vec2 from "gl-vec2";
+  import { detractorPos } from "./boidSimControls";
 
   export let color = "#ffe554";
   export let size = 10;
@@ -13,21 +14,6 @@
   export let maxVelocity = 5;
 
   let text;
-
-  let obj = {
-    pos: {
-      x: startX,
-      y: startY,
-    },
-    vel: {
-      x: 1,
-      y: 1,
-    },
-    accel: {
-      x: 0,
-      y: 0,
-    },
-  };
 
   let x = startX;
   let y = startY;
@@ -68,6 +54,8 @@
 
     position[0] = x;
     position[1] = y;
+
+    detractorPos.set([x, y]);
 
     context.lineCap = "round";
 

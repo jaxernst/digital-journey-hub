@@ -9,11 +9,16 @@ export const subtract = (v1: Vec2D, v2: Vec2D): Vec2D => {
 };
 
 export const mul = (v1: Vec2D, s: number): Vec2D => {
-  return [v1[0] * s, +v1[0] * s];
+  return [v1[0] * s, v1[1] * s];
+};
+
+export const div = (v1: Vec2D, s: number): Vec2D => {
+  return [v1[0] / s, v1[1] / s];
 };
 
 export const norm = (v: Vec2D): Vec2D => {
   const mag = magnitude(v);
+  if (!mag) return [0, 0];
   return [v[0] / mag, v[1] / mag];
 };
 

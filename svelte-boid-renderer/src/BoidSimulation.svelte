@@ -1,19 +1,20 @@
 <script lang="ts">
   import { height, renderable, width } from "./game";
   import { createBoidSimulation } from "./lib/boid-engine/main";
-  import { addBoid } from "./boidSimControls";
+  import { addBoid, detractorPos } from "./boidSimControls";
   import { onMount } from "svelte";
-  import { MakeBoidDrawer } from "./lib/boid-engine/boid-drawers";
+  import { MakeBoidDrawer } from "./lib/boid-engine/canvas-drawers";
+
+  const getRand = (max) => Math.random() * max * (Math.random() < 0.5 ? 1 : -1);
 
   const boidSim = createBoidSimulation({
-    numBoids: 0,
-    startPos: { x: $width / 2, y: $height / 2 },
+    numBoids: 50,
+    startPos: [() => $width / 2, () => $height / 2],
+    startVel: [() => getRand(5), () => getRand(5)],
     boardSize: { w: $width, h: $height },
   });
 
-  const drawBoid = MakeBoidDrawer(10);
-
-  const getRand = (max) => Math.random() * max * (Math.random() < 0.5 ? 1 : -1);
+  const drawBoid = MakeBoidDrawer(4);
 
   // Put simulation controls into store on mount
   onMount(() => {
@@ -27,7 +28,8 @@
 
   renderable((props, dt) => {
     const { context: ctx, width, height } = props;
-    for (const boid of boidSim.update()) {
+    const boids = boidSim.update($detractorPos, ctx, { w: width, h: height });
+    for (const boid of boids) {
       drawBoid(boid.vec.pos, boid.vec.vel, ctx);
     }
   });
