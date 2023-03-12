@@ -71,7 +71,7 @@ function separate(
   others: Boid[],
   refDist: number,
   ctx: CanvasRenderingContext2D
-) {
+): Vec2D {
   const pSum = [0, 0];
   for (let other of others) {
     pSum[0] += other.vec.pos[0];
@@ -97,13 +97,12 @@ function separate(
 function detract(
   boid: Boid,
   point: [number, number],
-  strength,
+  strength: number,
   minDistance: number
-) {
-  if (!(distance(boid.vec.pos, point) <= minDistance)) return;
-
+): Vec2D {
+  if (!(distance(boid.vec.pos, point) <= minDistance)) return [0, 0];
   const diff = subtract(boid.vec.pos, point);
-  return mul(diff, strength / Math.sqrt(magnitude(diff)));
+  return mul(diff, strength / magnitude(diff) ** 2 + 1);
 }
 
 function findBoidsInSight(boid: Boid, others: Boid[]) {
@@ -157,6 +156,9 @@ function update(
 
     force = norm(force);
 
+    if (cursor) {
+      force = add(force, detract(boid, cursor, 0.5, 100));
+    }
     vec.accel[0] = force[0] / (boid.mass + 0.01);
     vec.accel[1] = force[1] / (boid.mass + 0.01);
 

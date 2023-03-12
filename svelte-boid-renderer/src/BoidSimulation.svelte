@@ -14,7 +14,7 @@
     boardSize: { w: $width, h: $height },
   });
 
-  const drawBoid = MakeBoidDrawer(4);
+  const drawBoid = MakeBoidDrawer(5);
 
   // Put simulation controls into store on mount
   onMount(() => {

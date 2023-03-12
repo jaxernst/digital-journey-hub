@@ -21,6 +21,14 @@
 
     <Character size={10} moveSpeed={0.7} maxVelocity={10} />
     <Text
+      text="Jackson Ernst"
+      fontSize={12}
+      align="left"
+      baseline="bottom"
+      x={20}
+      y={$height - 20}
+    />
+    <Text
       text="Click and drag around the page to move the character."
       fontSize={12}
       align="right"
@@ -28,12 +36,13 @@
       x={$width - 20}
       y={$height - 20}
     />
+
     <FPS />
   </Canvas>
 
   <div class="overlay">
     <div class="content-container">
-      <h1 class="left">Boids</h1>
+      <h1 class="left" style="margin-bottom:0">Boids</h1>
       <div class="right-bar">
         <button on:click={() => $addBoid && $addBoid()}>Spawn</button>
       </div>
