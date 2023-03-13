@@ -203,7 +203,9 @@ export function createBoidSimulation({
   };
 }) {
   if (boardSize.w < 650) {
-    defaultBoid.maxV = 3;
+    // defaultBoid.maxV = 6;
+    detractorDistance = 50;
+    defaultBoid.frictionCoefficient = 0.97;
     defaultBoid.separationDistance = 10;
     defaultBoid.sightRadius = 100;
     defaultBoid.mass = 10;
