@@ -26,6 +26,7 @@ a:hover {
 body,
 html {
   position: fixed;
+  touch-action:none;
 }
 
 body {
