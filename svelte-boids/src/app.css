@@ -26,10 +26,11 @@ a:hover {
 body,
 html {
   position: fixed;
-  touch-action:none;
+  
 }
 
 body {
+  touch-action:none;
   margin: 0;
   display: flex;
   place-items: center;
