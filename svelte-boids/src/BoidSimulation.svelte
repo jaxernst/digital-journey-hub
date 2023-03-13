@@ -9,14 +9,12 @@
 
   const getRand = (max) => Math.random() * max * (Math.random() < 0.5 ? 1 : -1);
 
-  $: boidSim =
-    started &&
-    createBoidSimulation({
-      numBoids: 100,
-      startPos: [() => $width / 2, () => $height / 2],
-      startVel: [() => getRand(5), () => getRand(5)],
-      boardSize: { w: $width, h: $height },
-    });
+  const boidSim = createBoidSimulation({
+    numBoids: 100,
+    startPos: [() => $width / 2, () => $height / 2],
+    startVel: [() => getRand(5), () => getRand(5)],
+    boardSize: { w: $width, h: $height },
+  });
 
   const drawBoid = MakeBoidDrawer(5);
 
@@ -31,7 +29,7 @@
   });
 
   renderable((props, dt) => {
-    if (!boidSim) return;
+    if (!started) return;
     const { context: ctx, width, height } = props;
     const boids = boidSim.update($detractorPos, ctx, { w: width, h: height });
     for (const boid of boids) {
