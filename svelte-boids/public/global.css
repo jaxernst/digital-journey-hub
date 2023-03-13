@@ -45,7 +45,7 @@ input:disabled {
 }
 
 button {
-	color: #333;
+	color: rgb(179, 179, 179);
 	background-color: #f4f4f4;
 	outline: none;
 }
