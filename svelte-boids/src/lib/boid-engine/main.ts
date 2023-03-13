@@ -48,6 +48,8 @@ const defaultBoid = {
   ...defaultAttrs,
 };
 
+let detractorDistance = 100;
+
 function align(boid: Boid, others: Boid[]) {
   let vSum = [0, 0];
   for (let other of others) {
@@ -157,7 +159,7 @@ function update(
     force = norm(force);
 
     if (cursor) {
-      force = add(force, detract(boid, cursor, 10, 100));
+      force = add(force, detract(boid, cursor, 10, detractorDistance));
     }
 
     vec.accel[0] = force[0] / (boid.mass + 0.01);
@@ -200,6 +202,12 @@ export function createBoidSimulation({
     w: number;
   };
 }) {
+  if (boardSize.w < 650) {
+    defaultBoid.maxV = 3;
+    defaultBoid.separationDistance = 10;
+    defaultBoid.sightRadius = 100;
+    defaultBoid.mass = 7;
+  }
   let boids = [...Array(numBoids)].map(() => ({
     ...defaultBoid,
     vec: {

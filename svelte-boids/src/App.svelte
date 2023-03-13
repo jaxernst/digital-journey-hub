@@ -75,44 +75,14 @@
   }
 
   .content-container {
-    display: grid;
-    grid-template-columns: 1fr 20vw;
-  }
-
-  .menu {
-    grid-column: 1;
     display: flex;
-    flex-direction: column;
-    text-align: left;
-    gap: 0.5em;
-  }
-
-  .menu-item {
-    background-color: rgba(90, 90, 90, 0.467);
-    display: flex;
-    align-items: center;
-    padding: 1em;
-  }
-
-  .menu-item:nth-child(1) {
-    width: var(--w1);
-  }
-
-  .menu-item:nth-child(2) {
-    width: var(--w2);
-  }
-
-  .menu-item:nth-child(3) {
-    width: var(--w3);
-  }
-
-  .menu-item:nth-child(4) {
-    width: var(--w4);
+    justify-content: space-between;
   }
 
   .right-bar {
     grid-column: 2;
     grid-row: 1/-1;
     padding-top: 1.5em;
+    margin-right: 2em;
   }
 </style>
