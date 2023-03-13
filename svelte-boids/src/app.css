@@ -62,9 +62,10 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #922d2d;
+  background-color: #b12727c9;
   cursor: pointer;
   transition: border-color 0.25s;
+  color: rgb(229, 229, 229);
 }
 button:hover {
   border-color: #3b0101;
