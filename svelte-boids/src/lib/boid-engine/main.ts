@@ -223,7 +223,7 @@ export function createBoidSimulation({
   let board = boardSize;
 
   return {
-    update: (cursor: Vec2D, ctx, board: { w: number; h: number }) => {
+    update: (cursor: Vec2D, ctx, _board: { w: number; h: number }) => {
       for (let addBoid of addBoidQueue) {
         boids = [...boids, addBoid()];
       }
