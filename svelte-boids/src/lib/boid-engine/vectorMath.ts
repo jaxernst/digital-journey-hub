@@ -1,7 +1,12 @@
 type Vec2D = [number, number];
 
-export const add = (v1: Vec2D, v2: Vec2D): Vec2D => {
-  return [v1[0] + v2[0], v1[1] + v2[1]];
+export const add = (...vecs: Vec2D[]): Vec2D => {
+  const out = [0, 0] as Vec2D;
+  for (const vec of vecs) {
+    out[0] += vec[0];
+    out[1] += vec[1];
+  }
+  return out;
 };
 
 export const subtract = (v1: Vec2D, v2: Vec2D): Vec2D => {

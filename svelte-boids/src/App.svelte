@@ -21,7 +21,7 @@
 
     <Character size={10} moveSpeed={0.7} maxVelocity={10} />
     <Text
-      text="Jackson Ernst"
+      text="Jackson Ernst, Digital Journey"
       fontSize={12}
       align="left"
       baseline="bottom"

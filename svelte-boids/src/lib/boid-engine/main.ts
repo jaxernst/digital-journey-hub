@@ -18,6 +18,11 @@ export type Boid = {
   maxV: number;
   sightRadius: number;
   sightPeripheralDeg: number;
+  separationDistance: number;
+  separationFactor: number;
+  gravitationFactor: number;
+  alignmentFactor: number;
+  frictionCoefficient: number;
 };
 
 const boidVec: BoidVec = {
@@ -27,10 +32,15 @@ const boidVec: BoidVec = {
 };
 
 const defaultAttrs = {
-  mass: 5,
-  maxV: 10,
-  sightRadius: 100,
+  mass: 11,
+  maxV: 8,
+  sightRadius: 150,
   sightPeripheralDeg: 180,
+  separationDistance: 50,
+  separationFactor: 1,
+  gravitationFactor: 1,
+  alignmentFactor: 1,
+  frictionCoefficient: 0.98,
 };
 
 const defaultBoid = {
@@ -59,10 +69,6 @@ function gravitate(boid: Boid, others: Boid[], ctx) {
 
   // Draw cg
   drawPoint(...pAvg, ctx);
-
-  // Draw force vector
-  const f = mul(norm(subtract(pAvg, boid.vec.pos)), 25);
-
   return subtract(pAvg, boid.vec.pos);
 }
 
@@ -79,18 +85,9 @@ function separate(
   }
   const pAvg = [pSum[0] / others.length, pSum[1] / others.length] as Vec2D;
   const dist = distance(boid.vec.pos, pAvg);
-  const vAway = norm(subtract(boid.vec.pos, pAvg));
-  /*const awayPlot = mul(norm(subtract(boid.vec.pos, pAvg)), 20);
-  canvasArrow(
-    ctx,
-    boid.vec.pos[0],
-    boid.vec.pos[1],
-    boid.vec.pos[0] + awayPlot[0],
-    boid.vec.pos[1] + awayPlot[1],
-    4,
-    "blue"
-  ); */
+  if (dist > boid.separationDistance) return [0, 0];
 
+  const vAway = norm(subtract(boid.vec.pos, pAvg));
   return mul(vAway, refDist / (dist + 0.1));
 }
 
@@ -149,25 +146,28 @@ function update(
 
     let force = [0, 0] as Vec2D;
     if (others.length > 0) {
-      force = add(force, mul(gravitate(boid, others, ctx), 1));
-      force = add(force, mul(align(boid, others), 1));
-      force = add(force, mul(separate(boid, others, board.w, ctx), 1));
+      force = add(
+        force,
+        mul(align(boid, others), boid.alignmentFactor),
+        mul(gravitate(boid, others, ctx), boid.gravitationFactor),
+        mul(separate(boid, others, board.w, ctx), boid.separationFactor)
+      );
     }
 
     force = norm(force);
 
     if (cursor) {
-      force = add(force, detract(boid, cursor, 0.5, 100));
+      force = add(force, detract(boid, cursor, 10, 100));
     }
+
     vec.accel[0] = force[0] / (boid.mass + 0.01);
     vec.accel[1] = force[1] / (boid.mass + 0.01);
 
     vec.vel[0] += vec.accel[0];
     vec.vel[1] += vec.accel[1];
 
-    vec.vel[0] *= 0.98;
-    vec.vel[1] *= 0.98;
-
+    vec.vel[0] *= boid.frictionCoefficient;
+    vec.vel[1] *= boid.frictionCoefficient;
     vec.vel = limitSpeed(boid);
 
     vec.pos[0] += vec.vel[0];
