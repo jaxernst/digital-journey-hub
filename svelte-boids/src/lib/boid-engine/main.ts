@@ -205,8 +205,8 @@ export function createBoidSimulation({
   if (boardSize.w < 650) {
     detractorDistance = 50;
     defaultBoid.frictionCoefficient = 0.97;
-    defaultBoid.separationDistance = 8;
-    defaultBoid.sightRadius = 100;
+    defaultBoid.separationDistance = 12;
+    defaultBoid.sightRadius = 150;
     defaultBoid.mass = 10;
   }
   let boids = [...Array(numBoids)].map(() => ({

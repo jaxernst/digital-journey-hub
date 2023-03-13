@@ -21,7 +21,11 @@
     </Background>
 
     <BoidSimulation {started} />
-    <Character size={started ? 10 : 0} moveSpeed={0.7} maxVelocity={10} />
+    <Character
+      size={started ? 10 : 0}
+      moveSpeed={0.7}
+      maxVelocity={$width > 700 ? 10 : 4}
+    />
     <div class="big-screen-only">
       <Text
         text="Jackson Ernst | Digital Journey"
