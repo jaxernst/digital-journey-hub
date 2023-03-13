@@ -42,7 +42,7 @@
 
   <div class="overlay">
     <div class="content-container">
-      <h1 class="left" style="margin-bottom:0">Boids</h1>
+      <h1 class="left" style="margin-bottom:0">Svelte Boids</h1>
       <div class="right-bar">
         <button on:click={() => $addBoid && $addBoid()}>Spawn</button>
       </div>
