@@ -16,6 +16,7 @@ export type Boid = {
   vec: BoidVec;
   mass: number;
   maxV: number;
+  minV: number;
   sightRadius: number;
   sightPeripheralDeg: number;
   separationDistance: number;
@@ -34,6 +35,7 @@ const boidVec: BoidVec = {
 const defaultAttrs = {
   mass: 15,
   maxV: 10,
+  minV: 4,
   sightRadius: 250,
   sightPeripheralDeg: 180,
   separationDistance: 40,
@@ -122,13 +124,12 @@ function findBoidsInSight(boid: Boid, others: Boid[]) {
 }
 
 function limitSpeed(boid: Boid) {
-  const minSpeed = 0.5;
   const speed = magnitude(boid.vec.vel);
   if (speed > boid.maxV) {
     return mul(div(boid.vec.vel, speed), boid.maxV);
   }
-  if (speed < minSpeed) {
-    return mul(div(boid.vec.vel, speed), minSpeed);
+  if (speed < boid.minV) {
+    return mul(div(boid.vec.vel, speed), boid.minV);
   }
   return boid.vec.vel;
 }
@@ -205,9 +206,10 @@ export function createBoidSimulation({
   if (boardSize.w < 650) {
     detractorDistance = 50;
     defaultBoid.frictionCoefficient = 0.97;
-    defaultBoid.separationDistance = 12;
+    defaultBoid.separationDistance = 20;
     defaultBoid.sightRadius = 150;
     defaultBoid.mass = 10;
+    defaultBoid.minV = 1;
   }
   let boids = [...Array(numBoids)].map(() => ({
     ...defaultBoid,
