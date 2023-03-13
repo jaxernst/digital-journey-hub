@@ -5,14 +5,18 @@
   import { onMount } from "svelte";
   import { MakeBoidDrawer } from "./lib/boid-engine/canvas-drawers";
 
+  export let started = false;
+
   const getRand = (max) => Math.random() * max * (Math.random() < 0.5 ? 1 : -1);
 
-  const boidSim = createBoidSimulation({
-    numBoids: 100,
-    startPos: [() => $width / 2, () => $height / 2],
-    startVel: [() => getRand(5), () => getRand(5)],
-    boardSize: { w: $width, h: $height },
-  });
+  $: boidSim =
+    started &&
+    createBoidSimulation({
+      numBoids: 100,
+      startPos: [() => $width / 2, () => $height / 2],
+      startVel: [() => getRand(5), () => getRand(5)],
+      boardSize: { w: $width, h: $height },
+    });
 
   const drawBoid = MakeBoidDrawer(5);
 
@@ -27,6 +31,7 @@
   });
 
   renderable((props, dt) => {
+    if (!boidSim) return;
     const { context: ctx, width, height } = props;
     const boids = boidSim.update($detractorPos, ctx, { w: width, h: height });
     for (const boid of boids) {

@@ -11,6 +11,8 @@ export function canvasArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color) {
 
   ctx.save();
   ctx.strokeStyle = color;
+  ctx.shadowBlur = 100;
+  ctx.shadowColor = "black";
 
   //starting path of the arrow from the start square to the end square
   //and drawing the stroke

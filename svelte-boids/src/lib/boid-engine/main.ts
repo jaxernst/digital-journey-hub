@@ -206,7 +206,7 @@ export function createBoidSimulation({
     defaultBoid.maxV = 3;
     defaultBoid.separationDistance = 10;
     defaultBoid.sightRadius = 100;
-    defaultBoid.mass = 7;
+    defaultBoid.mass = 10;
   }
   let boids = [...Array(numBoids)].map(() => ({
     ...defaultBoid,

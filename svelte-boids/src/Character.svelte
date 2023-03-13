@@ -76,15 +76,19 @@
   });
 
   function handleMouseMove({ clientX, clientY }) {
+    console.log(clientX, clientY);
+    if (!clientX || !clientY) return;
     mouse = [clientX, clientY];
   }
 
   function handleMouseDown(ev) {
+    console.log("down");
     handleMouseMove(ev);
     mouseDown = true;
   }
 
   function handleMouseUp(ev) {
+    console.log("up");
     handleMouseMove(ev);
     mouseDown = false;
   }
@@ -99,6 +103,11 @@
 </script>
 
 <svelte:window
+  on:touchstart={(e) =>
+    e.targetTouches[0] && handleMouseDown(e.targetTouches[0])}
+  on:touchend={(e) => e.targetTouches[0] && handleMouseUp(e.targetTouches[0])}
+  on:touchmove={(e) =>
+    e.targetTouches[0] && handleMouseMove(e.targetTouches[0])}
   on:mousedown={handleMouseDown}
   on:mouseup={handleMouseUp}
   on:mousemove={handleMouseMove}

@@ -9,6 +9,8 @@
   import FPS from "./FPS.svelte";
   import BoidSimulation from "./BoidSimulation.svelte";
   import { addBoid } from "./boidSimControls.js";
+
+  let started = false;
 </script>
 
 <div class="main">
@@ -17,19 +19,20 @@
       <DotGrid divisions={30} color="hsla(0, 0%, 100%, 0.5)" />
     </Background>
 
-    <BoidSimulation />
-
-    <Character size={10} moveSpeed={0.7} maxVelocity={10} />
+    <BoidSimulation {started} />
+    <Character size={started ? 10 : 0} moveSpeed={0.7} maxVelocity={10} />
+    <div class="big-screen-only">
+      <Text
+        text="Jackson Ernst | Digital Journey"
+        fontSize={12}
+        align="left"
+        baseline="bottom"
+        x={20}
+        y={$height - 20}
+      />
+    </div>
     <Text
-      text="Jackson Ernst, Digital Journey"
-      fontSize={12}
-      align="left"
-      baseline="bottom"
-      x={20}
-      y={$height - 20}
-    />
-    <Text
-      text="Click and drag around the page to move the character."
+      text="Click to move character"
       fontSize={12}
       align="right"
       baseline="bottom"
@@ -44,10 +47,19 @@
     <div class="content-container">
       <h1 class="left" style="margin-bottom:0">Svelte Boids</h1>
       <div class="right-bar">
-        <button on:click={() => $addBoid && $addBoid()}>Spawn</button>
+        {#if started}
+          <button on:click={() => $addBoid && $addBoid()}>Spawn</button>
+        {/if}
       </div>
     </div>
   </div>
+
+  {#if !started}
+    <button class="centered-button" on:click={() => (started = true)}
+      >Start</button
+    >
+  {/if}
+  >
 </div>
 
 <style>
@@ -58,6 +70,13 @@
 
   .left {
     text-align: left;
+  }
+
+  .centered-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .main {
