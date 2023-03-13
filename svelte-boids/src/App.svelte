@@ -11,6 +11,7 @@
   import { addBoid } from "./boidSimControls.js";
 
   let started = false;
+  $: command = $width > 700 ? "click" : "tap";
 </script>
 
 <div class="main">
@@ -32,7 +33,7 @@
       />
     </div>
     <Text
-      text="Click to move character"
+      text={command + " to move character"}
       fontSize={12}
       align="right"
       baseline="bottom"

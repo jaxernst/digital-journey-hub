@@ -76,19 +76,16 @@
   });
 
   function handleMouseMove({ clientX, clientY }) {
-    console.log(clientX, clientY);
     if (!clientX || !clientY) return;
     mouse = [clientX, clientY];
   }
 
   function handleMouseDown(ev) {
-    console.log("down");
     handleMouseMove(ev);
     mouseDown = true;
   }
 
   function handleMouseUp(ev) {
-    console.log("up");
     handleMouseMove(ev);
     mouseDown = false;
   }
