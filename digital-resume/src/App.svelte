@@ -1,7 +1,15 @@
 <script lang="ts">
-  import { writable } from "svelte/store";
+  import { derived, writable } from "svelte/store";
   import "./tailwind.css";
-  import { crossfade, scale } from "svelte/transition";
+  import { crossfade, scale, fade, slide } from "svelte/transition";
+  import {
+    cubicInOut,
+    bounceIn,
+    expoInOut,
+    elasticOut,
+    circInOut,
+    sineInOut,
+  } from "svelte/easing";
 
   /* SECTIONS:
 
@@ -18,40 +26,16 @@
   Services
   */
 
+  const durationMain = 450;
   const [send, receive] = crossfade({
-    duration: 600,
+    duration: durationMain,
+    easing: cubicInOut,
     fallback: scale,
   });
 
   type Section = "about" | "experience" | "projects" | "skillset" | "contact";
 
   const sectionHeader = "text-xl font-bold mb-2";
-
-  const expandingSectionTw = (section?: Section) => {
-    const sectionOverrides: Partial<Record<Section, string>> = {
-      experience: "col-span-3",
-      projects: "col-span-full",
-    };
-
-    return (
-      "text-dark-white hover:text-white hover:border-3 hover:border-3 transition-all text-lg border border-b-white rounded p-2 " +
-      (section ? sectionOverrides[section] : "")
-    );
-  };
-
-  const activeSectionTw = (section?: Section) => {
-    const sectionOverrides: Partial<Record<Section, string>> = {
-      experience: "col-span-3 row-span-3",
-      about: "col-span-2 row-span-2",
-      skillset: "col-span-2 row-span-2",
-      contact: "row-start-2 col-start-2 col-span-2 row-span-2",
-      projects: "",
-    };
-
-    return "text-white border-3 shadow-md " + section
-      ? sectionOverrides[section]
-      : "";
-  };
 
   const activeSection = writable<null | Section>(null);
   $: toggleSection = (section: Section) =>
@@ -64,72 +48,112 @@
 <div
   class="flex min-h-screen items-center justify-center bg-gray-800 px-[10vw] sm:px-0"
 >
-  <div class="rounded-lg border-4 bg-gray-900 p-6 shadow-lg">
+  <div class="rounded-lg border-4 bg-gray-900 p-6 text-left shadow-lg">
+    <div
+      class="col-span-3 mb-4 rounded border border-b-white p-4 text-center text-4xl font-bold text-white"
+    >
+      Jackson Ernst
+      <h2 class="col-span-3 text-center text-lg font-thin">
+        Full Stack Web3 Developer and Protocol Engineer
+      </h2>
+    </div>
     <div class="grid grid-cols-3 gap-4">
-      <div
-        class="col-span-3 mb-4 rounded border border-b-white p-2 text-center text-4xl font-bold text-white"
-      >
-        Jackson Ernst
-        <h2 class="col-span-3 text-center text-lg font-thin">
-          Full Stack Web3 Developer and Protocol Engineer
-        </h2>
-      </div>
-
       <!-- About Section -->
-      {#if !isActive("about")}
-        <div class={expandingSectionTw()}>
-          <button on:click|preventDefault={() => toggleSection("about")}>
-            <h2 class={sectionHeader}>About</h2>
+      {#key $activeSection}
+        <div
+          in:receive={{ key: "about" }}
+          out:send={{ key: "about" }}
+          class={"col-start-1 row-start-1 " +
+            (isActive("about")
+              ? "z-10 col-span-3 bg-gray-900 shadow-lg "
+              : " ") +
+            "rounded border border-b-white p-2"}
+        >
+          <button on:click={() => toggleSection("about")}>
+            <h2 class="mb-2 text-xl font-bold">About</h2>
+          </button>
+
+          {#if isActive("about")}
+            <div
+              in:slide={{
+                duration: 400,
+                delay: durationMain / 2,
+                easing: sineInOut,
+              }}
+              out:slide={{ duration: 100 }}
+            >
+              <p>Information about me</p>
+              <p>Interests</p>
+              <div>More info about myself More info about myself</div>
+            </div>
+          {/if}
+        </div>
+      {/key}
+
+      <!-- Skillset Section -->
+      {#key $activeSection}
+        <div
+          in:receive={{ key: "skillset" }}
+          out:send={{ key: "skillset" }}
+          class={"row-start-1 " +
+            (isActive("skillset")
+              ? "z-10 col-span-3 col-start-1 bg-gray-900 shadow-lg "
+              : "col-start-2 ") +
+            "rounded border border-b-white p-2"}
+        >
+          <button on:click={() => toggleSection("skillset")}>
+            <h2 class="mb-2 text-xl font-bold">Skillset</h2>
+          </button>
+
+          {#if isActive("skillset")}
+            <div
+              in:slide={{
+                duration: 400,
+                delay: durationMain / 2,
+                easing: sineInOut,
+              }}
+              out:slide={{ duration: 100 }}
+            >
+              <p>Languages</p>
+              <p>Frameworks</p>
+              <div>Strengths</div>
+            </div>
+          {/if}
+        </div>
+      {/key}
+
+      <!-- Contact Section -->
+      {#if !isActive("contact")}
+        <div
+          in:receive={{ key: "contact" }}
+          out:send={{ key: "contact" }}
+          class={"col-start-3 row-start-1 rounded border border-b-white bg-gray-900 p-2"}
+        >
+          <button on:click|preventDefault={() => toggleSection("contact")}>
+            <h2 class={sectionHeader}>Contact</h2>
           </button>
         </div>
       {:else}
-        <div class={expandingSectionTw() + " " + activeSectionTw("about")}>
-          <button on:click|preventDefault={() => toggleSection("about")}>
-            <h2 class={sectionHeader}>About</h2>
+        <div
+          in:receive={{ key: "contact" }}
+          out:send={{ key: "contact" }}
+          class={"z-10 col-span-3 col-start-1 row-start-1 rounded border border-b-white bg-gray-900 p-2"}
+        >
+          <button on:click|preventDefault={() => toggleSection("contact")}>
+            <h2 class={sectionHeader}>Contact</h2>
           </button>
-          <div>More info about myself More info about myself</div>
-        </div>
-      {/if}
-
-      <!-- Skillset Section -->
-      <div
-        class={expandingSectionTw() +
-          " " +
-          (isActive("skillset") ? activeSectionTw("skillset") : "")}
-      >
-        <button on:click|preventDefault={() => toggleSection("skillset")}>
-          <h2 class={sectionHeader}>Skillset</h2>
-        </button>
-
-        {#if isActive("skillset")}
-          <div>Typescript Solidity</div>
-        {/if}
-      </div>
-
-      <!-- Contact Section -->
-      <div
-        class={expandingSectionTw() +
-          " " +
-          (isActive("contact") ? activeSectionTw("contact") : "")}
-      >
-        <button on:click|preventDefault={() => toggleSection("contact")}>
-          <h2 class={sectionHeader}>Contact</h2>
-        </button>
-        {#if isActive("contact")}
           <div>
             <p>123 Main Street</p>
             <p>San Diego, CA 92101</p>
             <p>(123) 456-7890</p>
             <p>johndoe@email.com</p>
           </div>
-        {/if}
-      </div>
+        </div>
+      {/if}
 
       <!-- Projects Section -->
       <div
-        class={expandingSectionTw("projects") +
-          " " +
-          (isActive("projects") ? activeSectionTw("projects") : "")}
+        class={"col-span-full rounded border border-b-white bg-gray-900 p-2"}
       >
         <button on:click|preventDefault={() => toggleSection("projects")}>
           <h2 class={sectionHeader}>Projects</h2>
@@ -147,9 +171,7 @@
 
       <!-- Experience Section -->
       <div
-        class={expandingSectionTw("experience") +
-          " " +
-          (isActive("experience") ? activeSectionTw("experience") : "")}
+        class={"col-span-full row-start-2 rounded border border-b-white bg-gray-900 p-2"}
       >
         <button on:click|preventDefault={() => toggleSection("experience")}>
           <h2 class={sectionHeader}>Professional Experience</h2>
