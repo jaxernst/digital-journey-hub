@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+  import { writable } from "svelte/store";
   import "./tailwind.css"
 
   /* SECTIONS:
@@ -16,25 +17,64 @@
   Services
   */
 
-  let showContact = false;
-  let showSummary = false;
-  let showExperience = false;
+  const expandingSection = "text-dark-white hover:text-white hover:border-3 hover:border-3 transition-all text-lg border border-b-white p-2"
+  const activeSectionTw = (section: Section) => {
+    const sectionDisplay: Record<Section, string> = {
+      experience: "col-span-3 row-span-3",
+      about: "col-span-3"
+    }
+    return "text-white border-3 shadow-md " + sectionDisplay[section]
+
+  } 
+  const sectionHeader = "text-xl font-bold mb-2"
+
+  type Section = "about" | "experience" | "projects" | "skillset" | "contact"
+
+  const activeSection =  writable<null | Section>(null)
+  $: toggleSection = (section: Section) => $activeSection === section ? activeSection.set(null) : activeSection.set(section)
+  $: isActive = (section: Section) => $activeSection == section
 </script>
 
-<div class="min-h-screen bg-gray-800 flex items-center justify-center">
-  <div class="bg-gray-900 border-4  border-white p-6 rounded-lg">
+<div class="min-h-screen bg-gray-800 flex items-center px-[10vw] justify-center">
+  <div class="bg-gray-900 border-4  border-red p-6 rounded-lg shadow-lg">
     <div class="grid grid-cols-3 gap-4">
-      <div class="col-span-3 text-center text-white text-4xl font-bold mb-4 border border-white p-2">
+      <div class="col-span-3 text-center text-white text-4xl font-bold mb-4 border border-b-white p-2">
         Jackson Ernst
         <h2 class="col-span-3 text-center font-thin text-lg">
           Full Stack Web3 Developer and Protocol Engineer
         </h2>
       </div>
-      <div class="col-span-1 text-white text-lg border border-white p-2">
-        <button on:click|preventDefault={() => (showContact = !showContact)}>
-          <h2 class="text-xl font-bold mb-2">Contact</h2>
+      <div class={expandingSection + " " + (isActive("about") ? activeSectionTw("about") : "")}>
+        <button on:click|preventDefault={() => toggleSection("about")}>
+          <h2 class={sectionHeader}>About Myself</h2>
+          
         </button>
-        {#if showContact}
+        
+        {#if isActive("about")}
+          <div>
+            More info about myself
+            More info about myself
+          </div>
+        {/if}
+      </div>
+      <div class={expandingSection + " " + (isActive("skillset") ? activeSectionTw("skillset") : "")}>
+        <button on:click|preventDefault={() => toggleSection("skillset")}>
+          <h2 class={sectionHeader}>Skillset</h2>
+          
+        </button>
+        
+        {#if isActive("skillset")}
+          <div>
+           Typescript 
+           Solidity
+          </div>
+        {/if}
+      </div>
+      <div class={expandingSection  + " " + (isActive("contact") ? ("contact") : "")}>
+        <button on:click|preventDefault={() => toggleSection("contact")}>
+          <h2 class={sectionHeader}>Contact</h2>
+        </button>
+        {#if isActive("contact")}
           <div>
             <p>123 Main Street</p>
             <p>San Diego, CA 92101</p>
@@ -43,21 +83,21 @@
           </div>
         {/if}
       </div>
-      <div class="col-span-2 text-white text-lg border border-white p-2">
-        <button on:click|preventDefault={() => (showSummary = !showSummary)}>
-          <h2 class="text-xl font-bold mb-2">Summary</h2>
+      <div class={expandingSection  + " " + (isActive("projects") ? activeSectionTw("projects") : "")}>
+        <button on:click|preventDefault={() => toggleSection("projects")}>
+          <h2 class={sectionHeader}>Projects</h2>
         </button>
-        {#if showSummary}
+        {#if isActive("projects")}
           <div>
             <p>Full stack developer with 5+ years of experience in developing web applications using modern technologies. Proficient in JavaScript, React, Node.js, and MongoDB.</p>
           </div>
         {/if}
       </div>
-      <div class="col-span-3 text-white text-lg border border-white p-2">
-        <button on:click|preventDefault={() => (showExperience = !showExperience)}>
-          <h2 class="text-xl font-bold mb-2">Experience</h2>
+      <div class={expandingSection   + " " + (isActive("experience") ? activeSectionTw("experience") : "")}>
+        <button on:click|preventDefault={() => toggleSection("experience")}>
+          <h2 class={sectionHeader}>Professional Experience</h2>
         </button>
-        {#if showExperience}
+        {#if isActive("experience")}
           <div>
             <h3 class="text-lg font-bold">Full Stack Developer - XYZ Company</h3>
             <p>Jan 2018 - Present</p>
