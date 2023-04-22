@@ -1,6 +1,21 @@
 <script>
   import "./tailwind.css"
 
+  /* SECTIONS:
+
+  About, 
+  Professional experience, 
+  Projects, 
+  Skillsets
+    - General purpose programming languages
+    - Domain specific languages
+    - Frameworks
+    - Architecutre
+
+  Interests, 
+  Services
+  */
+
   let showContact = false;
   let showSummary = false;
   let showExperience = false;
