@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "format": "prettier --write --plugin-search-dir=. ./**/*.html",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
@@ -12,6 +13,10 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
     "@tsconfig/svelte": "^4.0.1",
+    "autoprefixer": "^10.4.14",
+    "prettier": "^2.8.7",
+    "prettier-plugin-svelte": "^2.10.0",
+    "prettier-plugin-tailwindcss": "^0.2.7",
     "svelte": "^3.57.0",
     "svelte-check": "^2.10.3",
     "tailwindcss": "^3.3.1",
@@ -19,7 +24,5 @@
     "typescript": "^5.0.2",
     "vite": "^4.3.0"
   },
-  "dependencies": {
-    "autoprefixer": "^10.4.14"
-  }
+  "dependencies": {}
 }
