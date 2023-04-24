@@ -70,9 +70,7 @@
 
 <SvelteToast />
 
-<div
-  class="md flex min-h-screen items-center justify-center bg-gray-800 px-0 px-[10vw]"
->
+<div class="md flex min-h-screen items-center justify-center bg-gray-800">
   <div class="rounded-lg border-4 bg-gray-900 p-6 text-left shadow-lg">
     <div
       class="col-span-3 border-b-white text-center text-4xl font-bold text-white"
@@ -291,7 +289,7 @@
 
     <!-- Highlights Section -->
     <div
-      style="height:130px; width:250px"
+      style="height:130px; width:220px"
       class="relative m-2 overflow-hidden rounded-2xl border border-dark-white"
     >
       <video autoplay loop muted playsinline src={"boid-demo.mp4"} />
