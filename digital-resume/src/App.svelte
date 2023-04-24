@@ -287,7 +287,7 @@
       {/key}
     </div>
 
-    <h1 class="py-4 pt-6 text-lg font-bold">Featured</h1>
+    <h1 class="pb-2 pt-6 text-lg font-bold">Featured</h1>
 
     <!-- Highlights Section -->
     <div
