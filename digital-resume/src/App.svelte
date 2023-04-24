@@ -9,7 +9,7 @@
   import { crossfade, scale, fade, slide } from "svelte/transition";
   import { SvelteToast, toast } from "@zerodevx/svelte-toast";
   import { clickToCopyAction } from "svelte-legos";
-  import { Slidy } from "svelte-slidy";
+  import { Slidy } from "@slidy/svelte";
   import {
     cubicInOut,
     bounceIn,
@@ -19,7 +19,17 @@
     sineInOut,
     cubicOut,
   } from "svelte/easing";
+
   import EmailLogo from "./assets/email-logo.svelte";
+
+  const slides = [
+    {
+      id: 1,
+      width: 250,
+      height: 130,
+      src: "src/assets/digital-boids-preview.png",
+    },
+  ];
 
   /* SECTIONS:
 
@@ -37,7 +47,7 @@
   */
 
   const sectionStyle = " bg-gray-900 rounded border border-b-white p-2 ";
-  const sectionHeader = "text-lg font-bold mb-2";
+  const sectionHeader = "text-sm font-bold mb-2 md:text-lg";
   const activeSectionTw = " z-10 col-span-3 ";
 
   const durationMain = 450;
@@ -61,7 +71,7 @@
 <SvelteToast />
 
 <div
-  class="flex min-h-screen items-center justify-center bg-gray-800 px-[10vw] md:px-0"
+  class="md flex min-h-screen items-center justify-center bg-gray-800 px-0 px-[10vw]"
 >
   <div class="rounded-lg border-4 bg-gray-900 p-6 text-left shadow-lg">
     <div
@@ -207,7 +217,7 @@
               : "col-start-1 text-dark-white")}
         >
           <button on:click={() => toggleSection("experience")}>
-            <h2 class={sectionHeader}>Professional Experience</h2>
+            <h2 class={sectionHeader}>Experience</h2>
           </button>
 
           {#if isActive("experience")}
@@ -284,9 +294,9 @@
       style="height:130px; width:250px"
       class="relative m-2 overflow-hidden rounded-2xl border border-dark-white"
     >
-      <video autoplay loop alt={""} src={"src/assets/boid-demo.mp4"} />
+      <video autoplay loop muted playsinline src={"src/assets/boid-demo.mp4"} />
       <div
-        class="bg-dark-white-trans absolute bottom-0 left-0 h-[19%] w-full p-0 pl-2 text-sm font-bold text-white"
+        class="bg-dark-white-trans absolute bottom-0 left-0 h-[19%] w-full p-0 pl-4 text-sm font-bold text-white"
       >
         Boids: Interactive Flocking
       </div>
