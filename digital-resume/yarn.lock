@@ -170,6 +170,18 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@slidy/core@3.7.3":
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/@slidy/core/-/core-3.7.3.tgz#6aec16be82be1230dc85b2810a498ee345981899"
+  integrity sha512-PfwB9WlYCbVywGipiB7sKSQGtg6UAbY4kYbORyRwqr2g3008KwaqE52WGBSOuxw9yOOs+tCwp9zhXMmOoR5bqQ==
+
+"@slidy/svelte@^3.4.2":
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@slidy/svelte/-/svelte-3.4.2.tgz#29484f6f26d6fc43de6da14a2bd56aeaa29c0977"
+  integrity sha512-hh/IEMkYZE4x0fJLS94KfFYR8bCz76LG9GlUw9cPKsRNIjcnwX4FqyqMIAQKsC8KQ/nNeY6CdmUr6y2zS/7GiA==
+  dependencies:
+    "@slidy/core" "3.7.3"
+
 "@sveltejs/vite-plugin-svelte@^2.0.3":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@sveltejs/vite-plugin-svelte/-/vite-plugin-svelte-2.1.0.tgz#d0a760f932ad3ff85c66dda24e09f0c47359017a"
