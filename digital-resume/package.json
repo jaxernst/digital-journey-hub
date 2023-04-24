@@ -13,6 +13,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
     "@tsconfig/svelte": "^4.0.1",
+    "@zerodevx/svelte-toast": "^0.9.3",
     "autoprefixer": "^10.4.14",
     "prettier": "^2.8.7",
     "prettier-plugin-svelte": "^2.10.0",
@@ -24,5 +25,8 @@
     "typescript": "^5.0.2",
     "vite": "^4.3.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "svelte-legos": "^0.2.1",
+    "svelte-slidy": "^2.8.7"
+  }
 }
