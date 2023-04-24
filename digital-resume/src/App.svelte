@@ -294,7 +294,7 @@
       style="height:130px; width:250px"
       class="relative m-2 overflow-hidden rounded-2xl border border-dark-white"
     >
-      <video autoplay loop muted playsinline src={"src/assets/boid-demo.mp4"} />
+      <video autoplay loop muted playsinline src={"boid-demo.mp4"} />
       <div
         class="bg-dark-white-trans absolute bottom-0 left-0 h-[19%] w-full p-0 pl-4 text-sm font-bold text-white"
       >
