@@ -6,7 +6,7 @@ export default {
         white: "#d1dada",
         "dark-white": "#467a7a",
         "b-white": "#9dcdcd",
-        "grey-trans": "rgba(92, 92, 92, 0.839)"
+        "grey-trans": "rgba(50, 50, 50, 0.639)",
       },
     },
   },

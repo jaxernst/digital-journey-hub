@@ -3,6 +3,7 @@
   import GithubLogo from "./assets/github-logo.svelte";
   import LinkedinLogo from "./assets/linkedin-logo.svelte";
   import { derived, writable } from "svelte/store";
+  import { LinkPreview } from "svelte-link-preview";
 
   import "./tailwind.css";
 
@@ -71,7 +72,9 @@
 <SvelteToast />
 
 <div class="md flex min-h-screen items-center justify-center bg-gray-800">
-  <div class="rounded-lg border-4 bg-gray-900 p-6 text-left shadow-lg">
+  <div
+    class="w-[550px] rounded-lg border-4 bg-gray-900 p-6 text-left shadow-lg"
+  >
     <div
       class="col-span-3 border-b-white text-center text-4xl font-bold text-white"
     >
@@ -288,15 +291,31 @@
     <h1 class="pb-2 pt-6 text-lg font-bold">Featured</h1>
 
     <!-- Highlights Section -->
-    <div
-      style="height:130px; width:220px"
-      class="relative m-2 overflow-hidden rounded-2xl border border-dark-white"
-    >
-      <video autoplay loop muted playsinline src={"boid-demo.mp4"} />
+    <div class="flex overflow-x-auto">
       <div
-        class="bg-dark-white-trans absolute bottom-0 left-0 h-[19%] w-full p-0 pl-4 text-sm font-bold text-white"
+        style="height:130px; width:230px"
+        class="relative m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white"
       >
-        Boids: Interactive Flocking
+        <video autoplay loop muted playsinline src={"boid-demo.mp4"} />
+        <div
+          class="absolute bottom-0 left-0 w-full bg-grey-trans py-1 pl-2 text-xs font-bold text-white"
+        >
+          <p>Boids</p>
+          <p style="font-size:10px;">Interactive Flocking</p>
+        </div>
+      </div>
+
+      <div
+        style="height:130px; width:200px"
+        class="relative m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white"
+      >
+        <video autoplay loop muted playsinline src={"sac-demo.mp4"} />
+        <div
+          class="absolute bottom-0 left-0 w-full bg-grey-trans py-1 pl-2 text-xs font-bold text-white"
+        >
+          <p>Social Alarm Clock</p>
+          <p style="font-size:9px;">Winning Prop House proposal</p>
+        </div>
       </div>
     </div>
   </div>
