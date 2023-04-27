@@ -47,7 +47,7 @@
   */
 
   const sectionStyle = " bg-gray-900 rounded border border-b-white p-2 ";
-  const sectionHeader = "text-sm font-bold mb-2 md:text-lg";
+  const sectionHeader = " text-sm font-bold mb-2 md:text-lg ";
   const activeSectionTw = " z-10 col-span-3 ";
 
   const durationMain = 450;
@@ -70,7 +70,7 @@
 
 <SvelteToast />
 
-<div class="md flex min-h-screen items-center justify-center bg-gray-800">
+<div class="flex min-h-screen items-center justify-center bg-gray-800">
   <div
     class="w-[550px] rounded-lg border-4 bg-gray-900 p-6 text-left shadow-lg"
   >
@@ -423,12 +423,18 @@
     <h1 class="pb-2 pt-6 text-lg font-bold">Featured</h1>
 
     <!-- Highlights Section -->
-    <div class="flex overflow-x-auto">
+    <div class="flex overflow-x-scroll">
       <div
-        style="height:130px; width:230px"
         class="relative m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white"
       >
-        <video autoplay loop muted playsinline src={"boid-demo.mp4"} />
+        <video
+          autoplay
+          loop
+          muted
+          playsinline
+          style="height:130px; width:230px"
+          src={"boid-demo.mp4"}
+        />
         <div
           class="absolute bottom-0 left-0 w-full bg-grey-trans py-1 pl-2 text-xs font-bold text-white"
         >
