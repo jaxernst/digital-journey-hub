@@ -2,6 +2,7 @@
   import TwitterLogo from "./assets/twitter-logo.svelte";
   import GithubLogo from "./assets/github-logo.svelte";
   import LinkedinLogo from "./assets/linkedin-logo.svelte";
+  import ExternalLinkLogo from "./assets/external-link.svelte";
   import { derived, writable } from "svelte/store";
 
   import "./tailwind.css";
@@ -391,6 +392,7 @@
         </div>
       {/key}
 
+      <!-- Projects Section -->
       {#key $activeSection}
         <div
           in:receive={{ key: "projects" }}
@@ -406,14 +408,30 @@
           </button>
 
           {#if isActive("projects")}
-            <div transition:slide>
-              <div class="border border-dark-white" />
-              <h2>Projects</h2>
-              <div class="border border-dark-white" />
-              <h2>Projects</h2>
-              <div class="border border-dark-white" />
-              <h2>Projects</h2>
-              <div class="border border-dark-white" />
+            <div transition:slide class="p-2">
+              <div class="my-2">
+                <div class="my-2 flex gap-2">
+                  <a
+                    href="https://github.com/jaxernst"
+                    class=" flex hover:underline"
+                  >
+                    <h1 class="text-lg font-bold text-dark-white">
+                      Social Commitment Protocol
+                    </h1>
+                    <div class="h-4 w-4 stroke-dark-white">
+                      <ExternalLinkLogo />
+                    </div>
+                  </a>
+                </div>
+                <p>
+                  The social commitment protocol is a set of smart contracts and
+                  smart contract libraries I developed to facilitate onchain
+                  social 'commitments'. A commitment, by definition, is a
+                  promise or agreement to do <i>something</i> in the future. The
+                  protocol provides the primitives and tools needed to build dapps
+                  designed to help users be the best version of themselves.
+                </p>
+              </div>
             </div>
           {/if}
         </div>
