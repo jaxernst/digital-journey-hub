@@ -3,7 +3,6 @@
   import GithubLogo from "./assets/github-logo.svelte";
   import LinkedinLogo from "./assets/linkedin-logo.svelte";
   import { derived, writable } from "svelte/store";
-  import { LinkPreview } from "svelte-link-preview";
 
   import "./tailwind.css";
 
@@ -58,7 +57,7 @@
     fallback: scale,
   });
 
-  type Section = "about" | "skillset" | "contact" | "experience" | "projects";
+  type Section = "about" | "skillset" | "education" | "experience" | "projects";
 
   const activeSection = writable<null | Section>(null);
   $: toggleSection = (section: Section) =>
@@ -131,9 +130,22 @@
               }}
               out:slide={{ duration: 100 }}
             >
-              <p>Information about me</p>
-              <p>Interests</p>
-              <div>More info about myself More info about myself</div>
+              <p class="p-2">
+                I am a developer who believes in the power of open and
+                decentralized technology. I am driven by my crypto-native nerd
+                side, which has allowed me to become deeply familiar with many
+                technical concepts relating to the Ethereum protocol ecosystem
+                and blockchain technology as a whole.
+              </p>
+              <p class="p-2">
+                I have experience building on most layers of the decentralized
+                application stack, from creating beautiful user interfaces to
+                developing and deploying meta-transaction execution
+                infrastructure for a novel MEV capture protocol.
+              </p>
+              <p class="p-2">
+                I'm always down for a challenge and I never stop learning {" :)"}
+              </p>
             </div>
           {/if}
         </div>
@@ -163,30 +175,88 @@
               }}
               out:slide={{ duration: 100 }}
             >
-              <p>Languages</p>
-              <p>Frameworks</p>
-              <div>Strengths</div>
+              <div class="flex justify-end gap-3 text-xs">
+                <div class="flex text-pink-500">
+                  <div class="h-2 w-2 rounded-full bg-pink-500" />
+                  Actively learning
+                </div>
+                <div class="flex text-violet-500">
+                  <div class="h-2 w-2 rounded-full bg-violet-500" />
+                  Proficient
+                </div>
+                <div class="flex text-green-600">
+                  <div class="green-600 h-2 w-2 rounded-full bg-green-600" />
+                  Advanced
+                </div>
+              </div>
+              <h1 class="mt-2 text-sm font-bold">Languages</h1>
+              <div class="flex flex-wrap gap-3 p-2">
+                <div class="text-green-600">TypeScript</div>
+                <div class="text-green-600">Solidity</div>
+                <div class="text-violet-500">JavaScript</div>
+                <div class="text-green-600">Python</div>
+                <div class="text-pink-500">Elixir</div>
+                <div class="text-pink-500">Go</div>
+                <div class="text-pink-500">Rust</div>
+              </div>
+
+              <h1 class="mt-2 text-sm font-bold">
+                Smart Contract Tools / Frameworks
+              </h1>
+              <div class="flex flex-wrap gap-3 p-2">
+                <div class="text-green-600">Hardhat</div>
+                <div class="text-violet-500">Foundry</div>
+                <div class="text-green-600">Ethers js</div>
+                <div class="text-violet-500">Web3 js</div>
+                <div class="text-pink-500">Viem</div>
+                <div class="text-pink-500">WalletConnect</div>
+              </div>
+
+              <h1 class="mt-2 text-sm font-bold">UI / Other JS Frameworks</h1>
+              <div class="flex flex-wrap gap-3 p-2">
+                <div class="text-green-600">Svelte</div>
+                <div class="text-violet-500">Svelte-Kit</div>
+                <div class="text-green-600">React</div>
+                <div class="text-green-600">Preact</div>
+                <div class="text-violet-500">Zod</div>
+                <div class="text-violet-500">Playwright</div>
+              </div>
+              <h1 class="mt-2 text-sm font-bold">
+                Additional Skills / Knowledge
+              </h1>
+              <div class="flex flex-col gap-1 p-2">
+                <div class="text-green-600">Decentralized Exchange Design</div>
+                <div class="text-green-600">MEV Ecosystem</div>
+                <div class="text-violet-600">Ethereum Rollup Architecture</div>
+                <div class="text-violet-600">Bridging Architecture</div>
+                <div class="text-green-600">Smart Contract Auditing</div>
+                <div class="text-violet-500">UI/UX Design</div>
+                <div class="text-pink-500">
+                  OP Stack + Superchain Standardization
+                </div>
+                <div class="text-pink-500">Zero-Knowledge Proof Systems</div>
+              </div>
             </div>
           {/if}
         </div>
       {/key}
 
-      <!-- Contact Section -->
+      <!-- Education Section -->
       {#key $activeSection}
         <div
-          in:receive={{ key: "contact" }}
-          out:send={{ key: "contact" }}
+          in:receive={{ key: "education" }}
+          out:send={{ key: "education" }}
           class={"row-start-1 " +
             sectionStyle +
-            (isActive("contact")
+            (isActive("education")
               ? "z-10 col-span-3 col-start-1 bg-gray-900 shadow-lg "
               : "col-start-3 text-dark-white")}
         >
-          <button on:click={() => toggleSection("contact")}>
-            <h2 class={sectionHeader}>Contact</h2>
+          <button on:click={() => toggleSection("education")}>
+            <h2 class={sectionHeader}>Education</h2>
           </button>
 
-          {#if isActive("contact")}
+          {#if isActive("education")}
             <div
               in:slide={{
                 duration: 400,
@@ -195,12 +265,24 @@
               }}
               out:slide={{ duration: 100 }}
             >
-              <div>
-                <p>123 Main Street</p>
-                <p>San Diego, CA 92101</p>
-                <p>(123) 456-7890</p>
-                <p>johndoe@email.com</p>
+              <!-- Fill out this section with an example education resume section-->
+              <div class="flex justify-between">
+                <p>B.S. Aerospace Engineering</p>
+                <p><i>Sep. 2017 - May 2021</i></p>
               </div>
+              <h class="text-lg font-bold">
+                California Polytechnic State University (Cal Poly)
+              </h>
+
+              <p>San Luis Obispo, CA</p>
+
+              <p class="mt-3"><span class="font-bold">GPA:</span> 3.4</p>
+              <p class="mt-3">
+                <span class="font-bold">Featured Coursework:</span>
+                Computational Fluid Dynamics | Statistical Methods in Engineering
+                | Linear Analysis | Calculus Series (I-IV) | Technical Writing for
+                Engineers | System Engineering Design
+              </p>
             </div>
           {/if}
         </div>
@@ -223,37 +305,87 @@
 
           {#if isActive("experience")}
             <div transition:slide>
-              <h3 class="text-lg font-bold">
-                Full Stack Developer - XYZ Company
-              </h3>
-              <p>Jan 2018 - Present</p>
-              <ul class="mb-4 list-inside list-disc">
-                <li>
-                  Developed and maintained web applications using React and
-                  Node.js.
-                </li>
-                <li>Implemented RESTful APIs using Express.js and MongoDB.</li>
-                <li>
-                  Collaborated with cross-functional teams to deliver
-                  high-quality software.
-                </li>
-              </ul>
-              <h3 class="text-lg font-bold">Web Developer - ABC Company</h3>
-              <p>Jun 2016 - Dec 2017</p>
-              <ul class="list-inside list-disc">
-                <li>
-                  Developed and maintained the company website using HTML, CSS,
-                  and JavaScript.
-                </li>
-                <li>
-                  Implemented responsive design to ensure optimal user
-                  experience on all devices.
-                </li>
-                <li>
-                  Collaborated with the marketing team to create engaging
-                  content for the website.
-                </li>
-              </ul>
+              <div class="mx-1 my-4">
+                <p class="text-dark-white"><i>Hello World Labs</i></p>
+                <div class="flex justify-between">
+                  <h3 class="text-lg font-bold">
+                    Full Stack Engineer - eth.co
+                  </h3>
+                  <p>Jan 2023 - Present</p>
+                </div>
+                <ul class="list-inside list-disc">
+                  <li class="p-2">
+                    Led the frontend codebase migration from Javascript to
+                    Typescript, designing a type system for improved code
+                    quality and maintainability.
+                  </li>
+                  <li class="p-2">
+                    Integrated an end-to-end testing environment to cover
+                    interfaces between the Elixir-based backend, the Preact UI,
+                    and the ENS + NFT aggregation middleware
+                  </li>
+                  <li class="p-2">
+                    Introduced a suite of frontend hooks to facilitate data
+                    fetching from an ENS and NFT api.
+                  </li>
+                  <li class="p-2">
+                    Developed an administrative tool to mock Sign In With
+                    Ethereum authentication and 'impersonate' ENS profiles.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mx-1 my-4">
+                <p class="text-dark-white"><i>Clerkenwell Labs</i></p>
+                <div class="flex justify-between">
+                  <h3 class="text-lg font-bold">Software Design Engineer</h3>
+                  <p>Jan 2022 - Feb 2023</p>
+                </div>
+                <ul class="list-inside list-disc">
+                  <li class="p-2">
+                    Co-developed a smart contract transaction priority
+                    market/protocol to facilitate application layer MEV capture
+                  </li>
+                  <li class="p-2">
+                    Lead the development of off-chain 'keeper' infrastructure to
+                    order and execute blocks of meta-transactions queued through
+                    the protocol
+                  </li>
+                  <li class="p-2">
+                    Created & tested a reference implementation DEX (Uniswap V2
+                    fork) which integrates our protocol to capture MEV revenue
+                    and redistribute it to LPs and traders
+                  </li>
+                  <li class="p-2">
+                    Lead the development of a DEX arbitrage bot to trade stale
+                    prices of testnet pools and facilitate protocol testing
+                  </li>
+                </ul>
+              </div>
+
+              <div class="mx-1 my-4">
+                <p class="text-dark-white"><i>Moog Aircraft Group</i></p>
+                <div class="flex justify-between">
+                  <h3 class="text-lg font-bold">Software Systems Engineer</h3>
+                  <p>2020 - 2022</p>
+                </div>
+                <ul class="list-inside list-disc">
+                  <li class="p-2">
+                    Developed low level and high-level tests to verify flight
+                    critical software requirements
+                  </li>
+                  <li class="p-2">
+                    Lead the development of a Python library to record and
+                    analyze 1394b network communication across redundant flight
+                    control system processors.
+                  </li>
+                  <li class="p-2">
+                    Contributed to the development of a proprietary Python based
+                    data analysis and testing framework for requirement
+                    validation and verification.
+                  </li>
+                </ul>
+              </div>
             </div>
           {/if}
         </div>
