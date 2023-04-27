@@ -267,7 +267,7 @@
               out:slide={{ duration: 100 }}
             >
               <!-- Fill out this section with an example education resume section-->
-              <div class="flex justify-between">
+              <div class="flex justify-between sm:flex-col-reverse">
                 <p>B.S. Aerospace Engineering</p>
                 <p><i>Sep. 2017 - May 2021</i></p>
               </div>
@@ -409,11 +409,12 @@
 
           {#if isActive("projects")}
             <div transition:slide class="p-2">
-              <div class="my-2">
+              <div>
                 <div class="my-2 flex gap-2">
                   <a
-                    href="https://github.com/jaxernst"
+                    href="https://github.com/jaxernst/the-social-commitment-protocol"
                     class=" flex hover:underline"
+                    target="_blank"
                   >
                     <h1 class="text-lg font-bold text-dark-white">
                       Social Commitment Protocol
@@ -430,6 +431,46 @@
                   promise or agreement to do <i>something</i> in the future. The
                   protocol provides the primitives and tools needed to build dapps
                   designed to help users be the best version of themselves.
+                </p>
+              </div>
+              <div class="pt-2">
+                <div class="my-2 flex gap-2">
+                  <a
+                    href="https://github.com/jaxernst/the-social-commitment-protocol"
+                    class=" flex hover:underline"
+                    target="_blank"
+                  >
+                    <h1 class="text-lg font-bold text-dark-white">
+                      The Social Alarm Clock
+                    </h1>
+                    <div class="h-4 w-4 stroke-dark-white">
+                      <ExternalLinkLogo />
+                    </div>
+                  </a>
+                </div>
+                <p>
+                  The Social Alarm Clock is the first dapp built on top of the
+                  Social Commitment Protocol. The idea of this app is simple,
+                  really: Two users (who want to wake up earlier) can enter into
+                  a 'alarm clock' commitment with eachother, where they both
+                  agree to wake at the same time for specified days of the week.
+                  User's can increase the stakes by putting down 'collatoral'
+                  (ETH) which is forfeited (to the other player) if they fail to
+                  wake up on time.
+                </p>
+
+                <p class="pt-2">
+                  Recently, I submitted a proposal for the Social Alarm Clock to
+                  the Juicebox DAO open funding round 1, facilitated by the Nous
+                  props house, and the community seemed to like the idea because
+                  my proposal won 1st place!
+                </p>
+                <p class="pt-2">
+                  The full proposal can be read <a
+                    class="font-bold text-dark-white hover:underline"
+                    href="https://prop.house/juicebox/open-funding-round-1/4921"
+                    target="_blank">here</a
+                  >
                 </p>
               </div>
             </div>
