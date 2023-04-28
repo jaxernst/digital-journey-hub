@@ -374,7 +374,7 @@
 
               <div class="mx-1 my-4">
                 <p class="text-dark-white"><i>Clerkenwell Labs</i></p>
-                <div class="flex justify-between">
+                <div class="md:flex md:justify-between">
                   <h3 class="text-lg font-bold">Software Design Engineer</h3>
                   <p>Jan 2022 - Feb 2023</p>
                 </div>
@@ -402,7 +402,7 @@
 
               <div class="mx-1 my-4">
                 <p class="text-dark-white"><i>Moog Aircraft Group</i></p>
-                <div class="flex justify-between">
+                <div class="md:flex md:justify-between">
                   <h3 class="text-lg font-bold">Software Systems Engineer</h3>
                   <p>2020 - 2022</p>
                 </div>
