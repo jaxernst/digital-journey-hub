@@ -622,7 +622,7 @@
           muted
           playsinline
           style="height:100px; width:220px"
-          class="object-cover"
+          class="z-0 object-cover"
           src={"boid-demo.mp4"}
         />
         <button
@@ -665,14 +665,14 @@
         <video
           id="vid2"
           style="height:100px; width:190px;"
-          class="object-cover"
+          class="z-0 object-cover"
           autoplay
           loop
           muted
           playsinline
           src={"sac-demo.mp4"}
         />
-        <div class="w-ful px-3 py-1 text-xs font-bold text-white">
+        <div class="w-full px-3 py-1 text-xs font-bold text-white">
           <a
             target="_blank"
             href="https://prop.house/juicebox/open-funding-round-1/4921"
