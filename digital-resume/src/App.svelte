@@ -26,14 +26,7 @@
 
   let isSafari;
   onMount(() => {
-    isSafari =
-      /constructor/i.test(window.HTMLElement) ||
-      (function (p) {
-        return p.toString() === "[object SafariRemoteNotification]";
-      })(
-        !window["safari"] ||
-          (typeof safari !== "undefined" && window["safari"].pushNotification)
-      );
+    isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   });
 
   $: console.log(isSafari);
