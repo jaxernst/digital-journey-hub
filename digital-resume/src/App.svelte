@@ -47,11 +47,13 @@
   Services
   */
 
-  const sectionStyle = " bg-gray-900 rounded border border-b-white p-2 ";
-  const sectionHeader = " text-sm font-bold mb-2 md:text-lg ";
+  const sectionStyle =
+    " text-left bg-gray-900 rounded border border-b-white p-2 max-h-[500px] overflow-y-auto ";
+
+  const sectionHeader = " font-bold mb-2 text-lg ";
   const activeSectionTw = " z-10 col-span-3 ";
 
-  const durationMain = 450;
+  const durationMain = 520;
   const [send, receive] = crossfade({
     duration: durationMain,
     easing: cubicInOut,
@@ -67,13 +69,18 @@
       : activeSection.set(section);
 
   $: isActive = (section: Section) => $activeSection == section;
+
+  $: hoverEffectIfClosed = (section: Section) =>
+    $activeSection === section
+      ? " "
+      : " transition duration-200 hover:scale-110 hover:bg-dark-white hover:text-white hover:shadow-lg ";
 </script>
 
 <SvelteToast />
 
 <div class="flex min-h-screen items-center justify-center bg-gray-800">
   <div
-    class="w-[550px] rounded-lg border-4 bg-gray-900 p-6 text-left shadow-lg"
+    class="sm w-[510px] rounded-lg border-4 bg-gray-900 p-4 text-left shadow-lg md:p-6"
   >
     <div
       class="col-span-3 border-b-white text-center text-4xl font-bold text-white"
@@ -111,16 +118,18 @@
     <div class="grid grid-cols-3 gap-4">
       <!-- About Section -->
       {#key $activeSection}
-        <div
+        <button
           in:receive={{ key: "about" }}
           out:send={{ key: "about" }}
+          on:click={() => toggleSection("about")}
           class={"col-start-1 row-start-1 " +
             sectionStyle +
+            hoverEffectIfClosed("about") +
             (isActive("about") ? activeSectionTw : " text-dark-white ")}
         >
-          <button on:click={() => toggleSection("about")}>
+          <div>
             <h2 class={sectionHeader}>About</h2>
-          </button>
+          </div>
 
           {#if isActive("about")}
             <div
@@ -134,9 +143,9 @@
               <p class="p-2">
                 I am a developer who believes in the power of open and
                 decentralized technology. I am driven by my crypto-native nerd
-                side, which has allowed me to become deeply familiar with many
-                technical concepts relating to the Ethereum protocol ecosystem
-                and blockchain technology as a whole.
+                side, which has helped me to become deeply knowledgeable in many
+                technical fields relating to the Ethereum ecosystem and
+                blockchain technology as a whole.
               </p>
               <p class="p-2">
                 I have experience building on most layers of the decentralized
@@ -149,23 +158,43 @@
               </p>
             </div>
           {/if}
-        </div>
+        </button>
       {/key}
 
       <!-- Skillset Section -->
       {#key $activeSection}
-        <div
+        <button
           in:receive={{ key: "skillset" }}
           out:send={{ key: "skillset" }}
+          on:click={() => toggleSection("skillset")}
           class={"row-start-1 " +
             sectionStyle +
+            hoverEffectIfClosed("skillset") +
             (isActive("skillset")
               ? "z-10 col-span-3 col-start-1 bg-gray-900 shadow-lg "
               : "col-start-2 text-dark-white")}
         >
-          <button on:click={() => toggleSection("skillset")}>
+          <div class="flex justify-between">
             <h2 class={sectionHeader}>Skillset</h2>
-          </button>
+            {#if isActive("skillset")}
+              <div
+                class="flex content-stretch justify-end gap-3 p-1 text-[11px]"
+              >
+                <div class="flex gap-1 text-green-600">
+                  <div class="green-600 h-2 w-2 rounded-full bg-green-600" />
+                  Advanced
+                </div>
+                <div class="flex gap-1 text-violet-500">
+                  <div class="h-2 w-2 rounded-full bg-violet-500" />
+                  Proficient
+                </div>
+                <div class="flex gap-1 text-pink-500">
+                  <div class="h-2 w-2 rounded-full bg-pink-500" />
+                  Actively learning
+                </div>
+              </div>
+            {/if}
+          </div>
 
           {#if isActive("skillset")}
             <div
@@ -176,20 +205,6 @@
               }}
               out:slide={{ duration: 100 }}
             >
-              <div class="flex justify-end gap-3 text-xs">
-                <div class="flex text-pink-500">
-                  <div class="h-2 w-2 rounded-full bg-pink-500" />
-                  Actively learning
-                </div>
-                <div class="flex text-violet-500">
-                  <div class="h-2 w-2 rounded-full bg-violet-500" />
-                  Proficient
-                </div>
-                <div class="flex text-green-600">
-                  <div class="green-600 h-2 w-2 rounded-full bg-green-600" />
-                  Advanced
-                </div>
-              </div>
               <h1 class="mt-2 text-sm font-bold">Languages</h1>
               <div class="flex flex-wrap gap-3 p-2">
                 <div class="text-green-600">TypeScript</div>
@@ -239,23 +254,25 @@
               </div>
             </div>
           {/if}
-        </div>
+        </button>
       {/key}
 
       <!-- Education Section -->
       {#key $activeSection}
-        <div
+        <button
           in:receive={{ key: "education" }}
           out:send={{ key: "education" }}
+          on:click={() => toggleSection("education")}
           class={"row-start-1 " +
+            hoverEffectIfClosed("education") +
             sectionStyle +
             (isActive("education")
               ? "z-10 col-span-3 col-start-1 bg-gray-900 shadow-lg "
               : "col-start-3 text-dark-white")}
         >
-          <button on:click={() => toggleSection("education")}>
+          <div>
             <h2 class={sectionHeader}>Education</h2>
-          </button>
+          </div>
 
           {#if isActive("education")}
             <div
@@ -266,49 +283,52 @@
               }}
               out:slide={{ duration: 100 }}
             >
-              <!-- Fill out this section with an example education resume section-->
-              <div class="flex justify-between sm:flex-col-reverse">
-                <p>B.S. Aerospace Engineering</p>
-                <p><i>Sep. 2017 - May 2021</i></p>
-              </div>
+              <p class="text-[11px]"><i>Sep. 2017 - May 2021</i></p>
+              <p class="font-bold text-dark-white">
+                B.S. Aerospace Engineering
+              </p>
               <h class="text-lg font-bold">
-                California Polytechnic State University (Cal Poly)
+                California Polytechnic State University
               </h>
-
               <p>San Luis Obispo, CA</p>
 
-              <p class="mt-3"><span class="font-bold">GPA:</span> 3.4</p>
               <p class="mt-3">
-                <span class="font-bold">Featured Coursework:</span>
-                Computational Fluid Dynamics | Statistical Methods in Engineering
-                | Linear Analysis | Calculus Series (I-IV) | Technical Writing for
-                Engineers | System Engineering Design
+                <span class="font-bold text-dark-white"
+                  >Featured Coursework:</span
+                >
+                <i>
+                  Computational Fluid Dynamics | Statistical Methods in
+                  Engineering | Linear Analysis | Calculus Series (I-IV) |
+                  Technical Writing for Engineers | System Engineering Design
+                </i>
               </p>
             </div>
           {/if}
-        </div>
+        </button>
       {/key}
 
       <!-- Experience Section -->
       {#key $activeSection}
-        <div
+        <button
           in:receive={{ key: "experience" }}
           out:send={{ key: "experience" }}
+          on:click={() => toggleSection("experience")}
           class={"row-start-2 " +
             sectionStyle +
+            hoverEffectIfClosed("experience") +
             (isActive("experience")
               ? "z-10 col-span-3 col-start-1 row-start-1 bg-gray-900 shadow-lg "
               : "col-start-1 text-dark-white")}
         >
-          <button on:click={() => toggleSection("experience")}>
+          <div>
             <h2 class={sectionHeader}>Experience</h2>
-          </button>
+          </div>
 
           {#if isActive("experience")}
             <div transition:slide>
               <div class="mx-1 my-4">
                 <p class="text-dark-white"><i>Hello World Labs</i></p>
-                <div class="flex justify-between">
+                <div class="md:flex md:justify-between">
                   <h3 class="text-lg font-bold">
                     Full Stack Engineer - eth.co
                   </h3>
@@ -389,26 +409,31 @@
               </div>
             </div>
           {/if}
-        </div>
+        </button>
       {/key}
 
       <!-- Projects Section -->
       {#key $activeSection}
-        <div
+        <button
           in:receive={{ key: "projects" }}
           out:send={{ key: "projects" }}
+          on:click={() => toggleSection("projects")}
           class={"row-start-2 " +
             sectionStyle +
+            hoverEffectIfClosed("projects") +
             (isActive("projects")
               ? "z-10 col-span-3 col-start-1 row-start-1 bg-gray-900 shadow-lg "
               : "col-start-2 text-dark-white")}
         >
-          <button on:click={() => toggleSection("projects")}>
+          <div>
             <h2 class={sectionHeader}>Projects</h2>
-          </button>
+          </div>
 
           {#if isActive("projects")}
-            <div transition:slide class="p-2">
+            <div
+              transition:slide={{ duration: 600, easing: sineInOut }}
+              class="p-2"
+            >
               <div>
                 <div class="my-2 flex gap-2">
                   <a
@@ -436,7 +461,7 @@
               <div class="pt-2">
                 <div class="my-2 flex gap-2">
                   <a
-                    href="https://github.com/jaxernst/the-social-commitment-protocol"
+                    href="https://prop.house/juicebox/open-funding-round-1/4921"
                     class=" flex hover:underline"
                     target="_blank"
                   >
@@ -449,21 +474,22 @@
                   </a>
                 </div>
                 <p>
-                  The Social Alarm Clock is the first dapp built on top of the
-                  Social Commitment Protocol. The idea of this app is simple,
-                  really: Two users (who want to wake up earlier) can enter into
-                  a 'alarm clock' commitment with eachother, where they both
-                  agree to wake at the same time for specified days of the week.
-                  User's can increase the stakes by putting down 'collatoral'
-                  (ETH) which is forfeited (to the other player) if they fail to
-                  wake up on time.
+                  The Social Alarm Clock is the first dapp I am developing on
+                  top of the Social Commitment Protocol. The idea of the app is
+                  simple: Two users/friends/strangers (who want to wake up
+                  earlier) can enter into an 'alarm clock' bet with eachother,
+                  where they both agree on a wakeup time for specific days of
+                  the week. Every morning, they must submit onchain 'wakeup'
+                  confirmations before their alarm time to prove they are awake.
+                  If a user misses and alarm, a portion of their bet gets lost
+                  to the other player.
                 </p>
 
                 <p class="pt-2">
                   Recently, I submitted a proposal for the Social Alarm Clock to
-                  the Juicebox DAO open funding round 1, facilitated by the Nous
-                  props house, and the community seemed to like the idea because
-                  my proposal won 1st place!
+                  a Juicebox DAO open funding round hosted by the Nouns props
+                  house, and the community seemed to like the idea because my
+                  proposal won 1st place!
                 </p>
                 <p class="pt-2">
                   The full proposal can be read <a
@@ -473,47 +499,136 @@
                   >
                 </p>
               </div>
+              <div class="pt-2">
+                <div class="my-2 flex gap-2">
+                  <a
+                    href="https://digital-journey-hub.vercel.app/"
+                    class=" flex hover:underline"
+                    target="_blank"
+                  >
+                    <h1 class="text-lg font-bold text-dark-white">
+                      Digital Boids
+                    </h1>
+                    <div class="h-4 w-4 stroke-dark-white">
+                      <ExternalLinkLogo />
+                    </div>
+                  </a>
+                </div>
+                <p>
+                  Boid's algorithm is a simple algorithm that explores the
+                  nature of flocking behavior. The algorithmn three simple rules
+                  that produce fascinating emergent behavior:
+                </p>
+
+                <p class="pl-1 pt-2">
+                  1. Separation: steer to avoid crowding local flockmates 2.
+                  Alignment: steer towards the average heading of local 3.
+                  Cohesion: steer to move toward the average position of local
+                  flockmates
+                </p>
+
+                <p class="pt-2">
+                  With these 3 rules, a implemented the alogrithm and created
+                  this web app as an interactive canvas.
+                </p>
+
+                <p class="pt-2">
+                  Recently, I submitted a proposal for the Social Alarm Clock to
+                  a Juicebox DAO open funding round hosted by the Nouns props
+                  house, and the community seemed to like the idea because my
+                  proposal won 1st place!
+                </p>
+              </div>
+              <div class="pt-2">
+                <div class="my-2 flex gap-2">
+                  <a
+                    href="https://digital-journey-hub.vercel.app/"
+                    class=" flex hover:underline"
+                    target="_blank"
+                  >
+                    <h1 class="text-lg font-bold text-dark-white">
+                      Genetic Arbitrage Trading System
+                    </h1>
+                    <div class="h-4 w-4 stroke-dark-white">
+                      <ExternalLinkLogo />
+                    </div>
+                  </a>
+                </div>
+                <p>
+                  As I became interested in the world of trading and DeFi, I
+                  became fascinated with the idea of arbitrage. At the time, I
+                  was spending a vast majority of my time tinkering in Python
+                  building small toy projects. One day I stumbled upon a
+                  research paper detailing a genetic selection algorithm that
+                  could be used to identify profitable, multi-leg arbitrage
+                  trades. <a
+                    target="_blank"
+                    class="text-dark-white"
+                    href="https://www.scirp.org/html/9-9900153_22082.htm"
+                  >
+                    (source)</a
+                  >
+                </p>
+                <p class="pt-2">
+                  This project implements the algorithm, and integrates it into
+                  a trading system I developed to test it out.
+                </p>
+              </div>
             </div>
           {/if}
-        </div>
+        </button>
       {/key}
     </div>
 
     <h1 class="pb-2 pt-6 text-lg font-bold">Featured</h1>
 
     <!-- Highlights Section -->
-    <div class="flex overflow-x-scroll">
-      <div
-        class="relative m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white"
+    <div class="flex gap-1 overflow-x-scroll">
+      <a
+        href="https://digital-boids.vercel.app/"
+        target="_blank"
+        class={" m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white text-left" +
+          " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
       >
         <video
           autoplay
           loop
           muted
           playsinline
-          style="height:130px; width:230px"
+          style="height:100px; width:230px"
+          class="object-cover"
           src={"boid-demo.mp4"}
         />
         <div
-          class="absolute bottom-0 left-0 w-full bg-grey-trans py-1 pl-2 text-xs font-bold text-white"
+          class="w-full bg-grey-trans px-3 py-1 text-xs font-bold text-white"
         >
           <p>Boids</p>
-          <p style="font-size:10px;">Interactive Flocking</p>
+          <p style="font-size:9px;">Interactive Flocking</p>
         </div>
-      </div>
+      </a>
 
-      <div
-        style="height:130px; width:200px"
-        class="relative m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white"
+      <a
+        target="_blank"
+        href="https://prop.house/juicebox/open-funding-round-1/4921"
+        class={" m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white text-left" +
+          " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
       >
-        <video autoplay loop muted playsinline src={"sac-demo.mp4"} />
+        <video
+          style="height:100px; width:180px;"
+          class="object-cover"
+          autoplay
+          loop
+          muted
+          playsinline
+          src={"sac-demo.mp4"}
+        />
         <div
-          class="absolute bottom-0 left-0 w-full bg-grey-trans py-1 pl-2 text-xs font-bold text-white"
+          class="w-full bg-grey-trans px-3 py-1 text-xs font-bold text-white"
         >
           <p>Social Alarm Clock</p>
           <p style="font-size:9px;">Winning Prop House proposal</p>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </div>
