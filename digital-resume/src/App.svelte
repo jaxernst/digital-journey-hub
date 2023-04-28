@@ -48,9 +48,9 @@
   */
 
   const sectionStyle =
-    " text-left bg-gray-900 rounded border border-b-white p-2 max-h-[500px] overflow-y-auto ";
+    " text-left bg-gray-900 rounded border border-b-white p-2 max-h-[500px] overflow-y-auto  ";
 
-  const sectionHeader = " font-bold mb-2 text-lg ";
+  const sectionHeader = " font-bold mb-2 text-sm sm:text-lg ";
   const activeSectionTw = " z-10 col-span-3 ";
 
   const durationMain = 520;
@@ -80,7 +80,7 @@
 
 <div class="flex min-h-screen items-center justify-center bg-gray-800">
   <div
-    class="sm w-[510px] rounded-lg border-4 bg-gray-900 p-4 text-left shadow-lg md:p-6"
+    class="sm w-[510px] rounded-lg border-4 bg-gray-900 p-4 text-left shadow-lg sm:p-6"
   >
     <div
       class="col-span-3 border-b-white text-center text-4xl font-bold text-white"
@@ -587,7 +587,7 @@
       <a
         href="https://digital-boids.vercel.app/"
         target="_blank"
-        class={" m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white text-left" +
+        class={" z-50 m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white text-left" +
           " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
       >
         <video
@@ -610,7 +610,7 @@
       <a
         target="_blank"
         href="https://prop.house/juicebox/open-funding-round-1/4921"
-        class={" m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white text-left" +
+        class={" z-50 m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white text-left" +
           " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
       >
         <video
