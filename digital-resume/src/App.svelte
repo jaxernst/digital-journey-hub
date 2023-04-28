@@ -627,7 +627,7 @@
         />
         <button
           on:click={() => (vid1InfoOpen = !vid1InfoOpen)}
-          class="my-1 flex w-full flex-grow items-center px-3 text-left text-xs font-bold text-white"
+          class="my-1 flex h-[35px] w-full flex-grow items-center px-3 text-left text-xs font-bold text-white"
         >
           <div class="grid">
             {#if vid1InfoOpen}
@@ -672,15 +672,24 @@
           playsinline
           src={"sac-demo.mp4"}
         />
-        <div class="w-full px-3 py-1 text-xs font-bold text-white">
-          <a
-            target="_blank"
-            href="https://prop.house/juicebox/open-funding-round-1/4921"
-          >
-            <p>Social Alarm Clock</p>
-            <p style="font-size:9px;">Winning Prop House proposal</p>
-          </a>
-        </div>
+        <button
+          class="my-1 flex h-[35px] w-full flex-grow items-center px-3 text-left text-xs font-bold text-white"
+          on:click={() => (vid2InfoOpen = !vid2InfoOpen)}
+        >
+          {#if vid2InfoOpen}
+            <a
+              target="_blank"
+              href="https://prop.house/juicebox/open-funding-round-1/4921"
+              class="rounded-md border bg-dark-white p-1 transition hover:scale-110"
+              >View Proposal</a
+            >
+          {:else}
+            <div>
+              <p>Social Alarm Clock</p>
+              <p style="font-size:9px;">Winning Prop House proposal</p>
+            </div>
+          {/if}
+        </button>
       </div>
     </div>
   </div>
