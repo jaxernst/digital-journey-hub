@@ -3,14 +3,14 @@
   import GithubLogo from "./assets/github-logo.svelte";
   import LinkedinLogo from "./assets/linkedin-logo.svelte";
   import ExternalLinkLogo from "./assets/external-link.svelte";
-  import { derived, writable } from "svelte/store";
+  import UpArrow from "./assets/arrow-up.svelte";
+  import { writable } from "svelte/store";
 
   import "./tailwind.css";
 
   import { crossfade, scale, fade, slide } from "svelte/transition";
   import { SvelteToast, toast } from "@zerodevx/svelte-toast";
   import { clickToCopyAction } from "svelte-legos";
-  import { Slidy } from "@slidy/svelte";
   import {
     cubicInOut,
     bounceIn,
@@ -22,6 +22,7 @@
   } from "svelte/easing";
 
   import EmailLogo from "./assets/email-logo.svelte";
+  import { onMount } from "svelte";
 
   const slides = [
     {
@@ -32,20 +33,10 @@
     },
   ];
 
-  /* SECTIONS:
-
-  About, 
-  Professional experience, 
-  Projects, 
-  Skillsets
-    - General purpose programming languages
-    - Domain specific languages
-    - Frameworks
-    - Architecutre
-
-  Interests, 
-  Services
-  */
+  onMount(() => {
+    (document.getElementById("vid1") as any).play();
+    (document.getElementById("vid2") as any).play();
+  });
 
   const sectionStyle =
     " text-left bg-gray-900 rounded border border-b-white p-2 max-h-[500px] overflow-y-auto  ";
@@ -74,6 +65,9 @@
     $activeSection === section
       ? " "
       : " transition duration-200 hover:scale-110 sm:hover:bg-dark-white hover:text-white hover:shadow-lg ";
+
+  let vid1InfoOpen = false;
+  let vid2InfoOpen = false;
 </script>
 
 <SvelteToast />
@@ -147,19 +141,21 @@
             >
               <p class="p-2">
                 I am a developer who believes in the power of open and
-                decentralized technology. I am driven by my crypto-native nerd
-                side, which has helped me to become deeply knowledgeable in many
-                technical fields relating to the Ethereum ecosystem and
-                blockchain technology as a whole.
+                decentralized technology. I am driven my desire to understand
+                complex systems, and I'm particularly fascinated by the
+                challenges presented and solved by blockchain technology.
+              </p>
+
+              <p class="p-2">
+                I am deeply familiar with the Ethereum ecosystem and the
+                technology stacks that power it. I have experience building
+                within many layers of this ecosystem stack, from creating
+                beautiful user interfaces to developing and maintaining
+                meta-transaction execution infrastructure for a novel MEV
+                capture protocol.
               </p>
               <p class="p-2">
-                I have experience building on most layers of the decentralized
-                application stack, from creating beautiful user interfaces to
-                developing and deploying meta-transaction execution
-                infrastructure for a novel MEV capture protocol.
-              </p>
-              <p class="p-2">
-                I'm always down for a challenge and I never stop learning {" :)"}
+                I'm always down for a challenge and I never stop learning {":)"}
               </p>
             </div>
           {/if}
@@ -354,8 +350,8 @@
                   </li>
                   <li class="p-2">
                     Integrated an end-to-end testing environment to cover
-                    interfaces between the Elixir-based backend, the Preact UI,
-                    and the ENS + NFT aggregation middleware
+                    interfaces between an Elixir-based backend, a Preact UI, and
+                    an ENS + NFT aggregation middleware
                   </li>
                   <li class="p-2">
                     Introduced a suite of frontend hooks to facilitate data
@@ -467,7 +463,7 @@
                   </a>
                 </div>
                 <p>
-                  The social commitment protocol is a set of smart contracts and
+                  The Social Commitment Protocol is a set of smart contracts and
                   smart contract libraries I developed to facilitate onchain
                   social 'commitments'. A commitment, by definition, is a
                   promise or agreement to do <i>something</i> in the future. The
@@ -491,21 +487,21 @@
                   </a>
                 </div>
                 <p>
-                  The Social Alarm Clock is the first dapp I am developing on
-                  top of the Social Commitment Protocol. The idea of the app is
-                  simple: Two users/friends/strangers (who want to wake up
+                  The Social Alarm Clock is the first MVP dapp I am developing
+                  on top of the Social Commitment Protocol. The idea of the app
+                  is simple: Two users/friends/strangers (who want to wake up
                   earlier) can enter into an 'alarm clock' bet with eachother,
                   where they both agree on a wakeup time for specific days of
                   the week. Every morning, they must submit onchain 'wakeup'
                   confirmations before their alarm time to prove they are awake.
-                  If a user misses and alarm, a portion of their bet gets lost
-                  to the other player.
+                  If a user misses an alarm, a portion of their bet gets lost to
+                  the other player.
                 </p>
 
                 <p class="pt-2">
                   Recently, I submitted a proposal for the Social Alarm Clock to
-                  a Juicebox DAO open funding round hosted by the Nouns props
-                  house, and the community seemed to like the idea because my
+                  a Juicebox DAO open funding round hosted by the Nouns Prop
+                  House, and the community seemed to like the idea because my
                   proposal won 1st place!
                 </p>
                 <p class="pt-2">
@@ -533,15 +529,20 @@
                 </div>
                 <p>
                   Boid's algorithm is a simple algorithm that explores the
-                  nature of flocking behavior. The algorithmn three simple rules
-                  that produce fascinating emergent behavior:
+                  nature of flocking behavior. The algorithmn presents three
+                  simple rules that yield fascinating emergent behavior:
                 </p>
 
                 <p class="pl-1 pt-2">
-                  1. Separation: steer to avoid crowding local flockmates 2.
-                  Alignment: steer towards the average heading of local 3.
-                  Cohesion: steer to move toward the average position of local
+                  1. Separation: steer to avoid crowding local flockmates
+                </p>
+                <p class="pl-1 pt-1">
+                  2. Alignment: steer towards the average heading of local
                   flockmates
+                </p>
+                <p class="pl-1 pt-1">
+                  3. Cohesion: steer to move toward the average position of
+                  local flockmates
                 </p>
 
                 <p class="pt-2">
@@ -587,8 +588,9 @@
                   >
                 </p>
                 <p class="pt-2">
-                  This project implements the algorithm, and integrates it into
-                  a trading system I developed to test it out.
+                  This project implements this algorithm while integrating it
+                  into a trading system I developed to automated the execution
+                  of trades identified by the algorithm.
                 </p>
               </div>
             </div>
@@ -600,38 +602,61 @@
     <h1 class="pb-2 pt-6 text-lg font-bold">Featured</h1>
 
     <!-- Highlights Section -->
-    <div class="flex gap-1 overflow-x-scroll">
-      <a
-        href="https://digital-boids.vercel.app/"
-        target="_blank"
-        class={" z-50 m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white bg-grey-trans text-left" +
+    <div class="flex gap-1 overflow-x-auto">
+      <div
+        class={" z-50 m-2 flex min-w-[220px] flex-col overflow-hidden rounded-2xl border border-dark-white bg-grey-trans text-left" +
           " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
       >
         <video
+          id="vid1"
           autoplay
           loop
           muted
           playsinline
-          style="height:100px; width:230px"
+          style="height:100px; width:220px"
           class="object-cover"
           src={"boid-demo.mp4"}
         />
-        <div
-          class="w-full px-3 py-1 text-xs font-bold text-white hover:bg-dark-white"
+        <button
+          on:click={() => (vid1InfoOpen = !vid1InfoOpen)}
+          class="my-1 flex w-full flex-grow items-center px-3 text-left text-xs font-bold text-white"
         >
-          <p>Boids</p>
-          <p style="font-size:9px;">Interactive Flocking</p>
-        </div>
-      </a>
+          <div class="grid">
+            {#if vid1InfoOpen}
+              <div
+                transition:fade
+                class="col-start-1 row-start-1 flex flex-grow items-center justify-between gap-4"
+              >
+                <a
+                  href="https://digital-boids.vercel.app/"
+                  target="_blank"
+                  class="rounded-md border bg-dark-white p-1 transition hover:scale-110"
+                  >Website</a
+                >
+                <a
+                  href="https://github.com/jaxernst/svelte-boids"
+                  target="_blank"
+                  class="rounded-md border bg-dark-white p-1 hover:scale-110"
+                  >Source Code</a
+                >
+              </div>
+            {:else}
+              <div class="col-start-1 row-start-1">
+                <p>Boids</p>
+                <p style="font-size:9px;">Interactive Flocking</p>
+              </div>
+            {/if}
+          </div>
+        </button>
+      </div>
 
-      <a
-        target="_blank"
-        href="https://prop.house/juicebox/open-funding-round-1/4921"
+      <div
         class={" z-50 m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white bg-grey-trans text-left" +
           " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
       >
         <video
-          style="height:100px; width:180px;"
+          id="vid2"
+          style="height:100px; width:190px;"
           class="object-cover"
           autoplay
           loop
@@ -640,10 +665,15 @@
           src={"sac-demo.mp4"}
         />
         <div class="w-ful px-3 py-1 text-xs font-bold text-white">
-          <p>Social Alarm Clock</p>
-          <p style="font-size:9px;">Winning Prop House proposal</p>
+          <a
+            target="_blank"
+            href="https://prop.house/juicebox/open-funding-round-1/4921"
+          >
+            <p>Social Alarm Clock</p>
+            <p style="font-size:9px;">Winning Prop House proposal</p>
+          </a>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </div>
