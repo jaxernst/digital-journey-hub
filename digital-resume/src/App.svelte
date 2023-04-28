@@ -78,7 +78,7 @@
 
 <SvelteToast />
 
-<div class="flex min-h-screen items-center justify-center bg-gray-800">
+<div class="flex min-h-screen items-center justify-center bg-gray-800 p-3">
   <div
     class="sm w-[510px] rounded-lg border-4 bg-gray-900 p-4 text-left shadow-lg sm:p-6"
   >
@@ -95,12 +95,17 @@
     <div class="custom-grid place-items-center py-4 pb-6">
       <div />
       <div class="flex place-items-center gap-4">
-        <a href="https://github.com/jaxernst" class="h-6 w-6"><GithubLogo /></a>
-        <a href="https://twitter.com/yachtyyachty" class="h-6 w-6"
-          ><TwitterLogo /></a
+        <a href="https://github.com/jaxernst" target="_blank" class=" h-6 w-6"
+          ><GithubLogo /></a
+        >
+        <a
+          href="https://twitter.com/yachtyyachty"
+          target="_blank"
+          class="h-6 w-6"><TwitterLogo /></a
         >
         <a
           href="https://www.linkedin.com/in/jackson-ernst-9ab68014a/"
+          target="_blank"
           class="h-6 w-6"><LinkedinLogo /></a
         >
         <button
@@ -325,7 +330,14 @@
           </div>
 
           {#if isActive("experience")}
-            <div transition:slide>
+            <div
+              in:slide={{
+                duration: 400,
+                delay: durationMain,
+                easing: sineInOut,
+              }}
+              out:slide={{ duration: 400 }}
+            >
               <div class="mx-1 my-4">
                 <p class="text-dark-white"><i>Hello World Labs</i></p>
                 <div class="md:flex md:justify-between">
@@ -431,7 +443,12 @@
 
           {#if isActive("projects")}
             <div
-              transition:slide={{ duration: 600, easing: sineInOut }}
+              in:slide={{
+                duration: 400,
+                delay: durationMain,
+                easing: sineInOut,
+              }}
+              out:slide={{ duration: 400 }}
               class="p-2"
             >
               <div>
@@ -587,7 +604,7 @@
       <a
         href="https://digital-boids.vercel.app/"
         target="_blank"
-        class={" z-50 m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white text-left" +
+        class={" z-50 m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white bg-grey-trans text-left" +
           " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
       >
         <video
@@ -600,7 +617,7 @@
           src={"boid-demo.mp4"}
         />
         <div
-          class="w-full bg-grey-trans px-3 py-1 text-xs font-bold text-white"
+          class="w-full px-3 py-1 text-xs font-bold text-white hover:bg-dark-white"
         >
           <p>Boids</p>
           <p style="font-size:9px;">Interactive Flocking</p>
@@ -610,7 +627,7 @@
       <a
         target="_blank"
         href="https://prop.house/juicebox/open-funding-round-1/4921"
-        class={" z-50 m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white text-left" +
+        class={" z-50 m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white bg-grey-trans text-left" +
           " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
       >
         <video
@@ -622,9 +639,7 @@
           playsinline
           src={"sac-demo.mp4"}
         />
-        <div
-          class="w-full bg-grey-trans px-3 py-1 text-xs font-bold text-white"
-        >
+        <div class="w-ful px-3 py-1 text-xs font-bold text-white">
           <p>Social Alarm Clock</p>
           <p style="font-size:9px;">Winning Prop House proposal</p>
         </div>
