@@ -187,7 +187,7 @@
             <h2 class={sectionHeader}>Skillset</h2>
             {#if isActive("skillset")}
               <div
-                class="flex content-stretch justify-end gap-3 p-1 text-[11px]"
+                class="flex content-stretch justify-end gap-3 p-1 text-[10px]"
               >
                 <div class="flex gap-1 text-green-600">
                   <div class="green-600 h-2 w-2 rounded-full bg-green-600" />
@@ -199,7 +199,7 @@
                 </div>
                 <div class="flex gap-1 text-pink-500">
                   <div class="h-2 w-2 rounded-full bg-pink-500" />
-                  Actively learning
+                  Learning
                 </div>
               </div>
             {/if}
