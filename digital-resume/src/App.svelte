@@ -24,6 +24,20 @@
   import EmailLogo from "./assets/email-logo.svelte";
   import { onMount } from "svelte";
 
+  let isSafari;
+  onMount(() => {
+    isSafari =
+      /constructor/i.test(window.HTMLElement) ||
+      (function (p) {
+        return p.toString() === "[object SafariRemoteNotification]";
+      })(
+        !window["safari"] ||
+          (typeof safari !== "undefined" && window["safari"].pushNotification)
+      );
+  });
+
+  $: console.log(isSafari);
+
   const slides = [
     {
       id: 1,
@@ -38,8 +52,9 @@
     (document.getElementById("vid2") as any).play();
   });
 
-  const sectionStyle =
-    " text-left bg-gray-900 rounded border border-b-white p-2 max-h-[500px] overflow-y-auto  ";
+  $: sectionStyle =
+    " text-left bg-gray-900 rounded border border-b-white p-2 " +
+    (isSafari ? " " : " max-h-[500px] overflow-y-auto ");
 
   const sectionHeader = " font-bold mb-2 text-sm sm:text-lg ";
   const activeSectionTw = " z-10 col-span-3 ";
