@@ -73,7 +73,7 @@
   $: hoverEffectIfClosed = (section: Section) =>
     $activeSection === section
       ? " "
-      : " transition duration-200 hover:scale-110 hover:bg-dark-white hover:text-white hover:shadow-lg ";
+      : " transition duration-200 hover:scale-110 sm:hover:bg-dark-white hover:text-white hover:shadow-lg ";
 </script>
 
 <SvelteToast />
