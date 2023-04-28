@@ -218,8 +218,8 @@
               <div class="flex flex-wrap gap-3 p-2">
                 <div class="text-green-600">TypeScript</div>
                 <div class="text-green-600">Solidity</div>
-                <div class="text-violet-500">JavaScript</div>
                 <div class="text-green-600">Python</div>
+                <div class="text-violet-500">JavaScript</div>
                 <div class="text-pink-500">Elixir</div>
                 <div class="text-pink-500">Go</div>
                 <div class="text-pink-500">Rust</div>
@@ -230,8 +230,8 @@
               </h1>
               <div class="flex flex-wrap gap-3 p-2">
                 <div class="text-green-600">Hardhat</div>
-                <div class="text-violet-500">Foundry</div>
                 <div class="text-green-600">Ethers js</div>
+                <div class="text-violet-500">Foundry</div>
                 <div class="text-violet-500">Web3 js</div>
                 <div class="text-pink-500">Viem</div>
                 <div class="text-pink-500">WalletConnect</div>
@@ -240,9 +240,9 @@
               <h1 class="mt-2 text-sm font-bold">UI / Other JS Frameworks</h1>
               <div class="flex flex-wrap gap-3 p-2">
                 <div class="text-green-600">Svelte</div>
-                <div class="text-violet-500">Svelte-Kit</div>
                 <div class="text-green-600">React</div>
                 <div class="text-green-600">Preact</div>
+                <div class="text-violet-500">Svelte-Kit</div>
                 <div class="text-violet-500">Zod</div>
                 <div class="text-violet-500">Playwright</div>
               </div>
@@ -252,9 +252,9 @@
               <div class="flex flex-col gap-1 p-2">
                 <div class="text-green-600">Decentralized Exchange Design</div>
                 <div class="text-green-600">MEV Ecosystem</div>
+                <div class="text-green-600">Smart Contract Auditing</div>
                 <div class="text-violet-600">Ethereum Rollup Architecture</div>
                 <div class="text-violet-600">Bridging Architecture</div>
-                <div class="text-green-600">Smart Contract Auditing</div>
                 <div class="text-violet-500">UI/UX Design</div>
                 <div class="text-pink-500">
                   OP Stack + Superchain Standardization
@@ -613,7 +613,7 @@
     <div class="flex gap-1 overflow-x-auto">
       <div
         class={" z-50 m-2 flex min-w-[220px] flex-col overflow-hidden rounded-2xl border border-dark-white bg-grey-trans text-left" +
-          " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
+          " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-xl focus:scale-105 focus:bg-dark-white focus:shadow-xl"}
       >
         <video
           id="vid1"
@@ -660,7 +660,7 @@
 
       <div
         class={" z-50 m-2 flex-shrink-0 overflow-hidden rounded-2xl border border-dark-white bg-grey-trans text-left" +
-          " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-2xl"}
+          " transition duration-500 hover:scale-105 hover:bg-dark-white hover:shadow-xl focus:scale-105 focus:bg-dark-white focus:shadow-xl"}
       >
         <video
           id="vid2"
