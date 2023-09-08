@@ -13,12 +13,7 @@
   import { clickToCopyAction } from "svelte-legos";
   import {
     cubicInOut,
-    bounceIn,
-    expoInOut,
-    elasticOut,
-    circInOut,
     sineInOut,
-    cubicOut,
   } from "svelte/easing";
 
   import EmailLogo from "./assets/email-logo.svelte";
@@ -29,7 +24,6 @@
     isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   });
 
-  $: console.log(isSafari);
 
   const slides = [
     {
@@ -82,7 +76,7 @@
 
 <div class="flex min-h-screen items-center justify-center bg-gray-800 p-3">
   <div
-    class="sm w-[510px] rounded-lg border-4 bg-gray-900 p-4 text-left shadow-lg sm:p-6"
+    class="sm w-[510px] rounded-lg border-4 bg-gray-900 p-4 text-left shadow-lg sm:p-6 scale-100 lg:scale-125"
   >
     <div
       class="col-span-3 border-b-white text-center text-4xl font-bold text-white"
@@ -122,7 +116,7 @@
     </div>
 
     <!-- Card Sections -->
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-3 gap-4 ">
       <!-- About Section -->
       {#key $activeSection}
         <button
@@ -230,20 +224,21 @@
               </h1>
               <div class="flex flex-wrap gap-3 p-2">
                 <div class="text-green-600">Hardhat</div>
+                <div class="text-green-600">Viem</div>
                 <div class="text-green-600">Ethers js</div>
                 <div class="text-violet-500">Foundry</div>
                 <div class="text-violet-500">Web3 js</div>
-                <div class="text-pink-500">Viem</div>
+                <div class="text-pink-500">MUD Framework</div>
                 <div class="text-pink-500">WalletConnect</div>
               </div>
 
-              <h1 class="mt-2 text-sm font-bold">UI / Other JS Frameworks</h1>
+              <h1 class="mt-2 text-sm font-bold">UI Libraries + Frameworks</h1>
               <div class="flex flex-wrap gap-3 p-2">
                 <div class="text-green-600">Svelte</div>
                 <div class="text-green-600">React</div>
-                <div class="text-green-600">Preact</div>
+                <div class="text-violet-600">Zod</div>
+                <div class="text-violet-500">Phoenix</div>
                 <div class="text-violet-500">Svelte-Kit</div>
-                <div class="text-violet-500">Zod</div>
                 <div class="text-violet-500">Playwright</div>
               </div>
               <h1 class="mt-2 text-sm font-bold">
@@ -359,11 +354,10 @@
                   <li class="p-2">
                     Integrated an end-to-end testing environment to cover
                     interfaces between an Elixir-based backend, a Preact UI, and
-                    an ENS + NFT aggregation middleware
+                    a blockchain data aggregation middleware
                   </li>
                   <li class="p-2">
-                    Introduced a suite of frontend hooks to facilitate data
-                    fetching from an ENS and NFT api.
+                    Led the implemention of an XMTP based messenging system
                   </li>
                   <li class="p-2">
                     Developed an administrative tool to mock Sign In With
@@ -482,12 +476,12 @@
               <div class="pt-2">
                 <div class="my-2 flex gap-2">
                   <a
-                    href="https://prop.house/juicebox/open-funding-round-1/4921"
+                    href="https://alarmbets.tech"
                     class=" flex hover:underline"
                     target="_blank"
                   >
                     <h1 class="text-lg font-bold text-dark-white">
-                      The Social Alarm Clock
+                      The Social Alarm Clock (now Alarm Bets)
                     </h1>
                     <div class="h-4 w-4 stroke-dark-white">
                       <ExternalLinkLogo />
@@ -498,7 +492,7 @@
                   The Social Alarm Clock is the first MVP dapp I am developing
                   on top of the Social Commitment Protocol. The idea of the app
                   is simple: Two users/friends/strangers (who want to wake up
-                  earlier) can enter into an 'alarm clock' bet with eachother,
+                  earlier) can enter into an 'alarm clock' bet with each other,
                   where they both agree on a wakeup time for specific days of
                   the week. Every morning, they must submit onchain 'wakeup'
                   confirmations before their alarm time to prove they are awake.
@@ -633,7 +627,7 @@
             {#if vid1InfoOpen}
               <div
                 transition:fade
-                class="col-start-1 row-start-1 flex flex-grow items-center justify-between gap-4"
+                class="col-start-1 row-start-1 flex flex-grow items-center justify-between gap-2"
               >
                 <a
                   href="https://digital-boids.vercel.app/"
@@ -670,18 +664,24 @@
           loop
           muted
           playsinline
-          src={"sac-demo.mp4"}
+          src={"alarmbets-demo.mp4"}
         />
         <button
-          class="my-1 flex h-[35px] w-full flex-grow items-center px-3 text-left text-xs font-bold text-white"
+          class="my-1 flex h-[35px] w-full flex-grow items-center px-3 text-left gap-2 text-xs font-bold text-white"
           on:click={() => (vid2InfoOpen = !vid2InfoOpen)}
         >
           {#if vid2InfoOpen}
             <a
               target="_blank"
+              href="https://alarmbets.tech"
+              class="rounded-md border bg-dark-white p-1 transition hover:scale-110"
+              >App</a
+            >
+            <a
+              target="_blank"
               href="https://prop.house/juicebox/open-funding-round-1/4921"
               class="rounded-md border bg-dark-white p-1 transition hover:scale-110"
-              >View Proposal</a
+              >Proposal</a
             >
           {:else}
             <div>
